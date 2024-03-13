@@ -9,19 +9,19 @@
 /* Begin PBXBuildFile section */
 		1214F1DF2BA22B3A00F86303 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1214F1DE2BA22B3A00F86303 /* AppDelegate.swift */; };
 		1214F1E12BA22B3A00F86303 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1214F1E02BA22B3A00F86303 /* SceneDelegate.swift */; };
-		1214F1E32BA22B3A00F86303 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1214F1E22BA22B3A00F86303 /* ViewController.swift */; };
 		1214F1E82BA22B3C00F86303 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1214F1E72BA22B3C00F86303 /* Assets.xcassets */; };
 		1214F1EB2BA22B3C00F86303 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1214F1E92BA22B3C00F86303 /* LaunchScreen.storyboard */; };
+		1214F1F62BA22E2600F86303 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1214F1F52BA22E2600F86303 /* MenuViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1214F1DB2BA22B3A00F86303 /* MillionaireQuest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MillionaireQuest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1214F1DE2BA22B3A00F86303 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1214F1E02BA22B3A00F86303 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		1214F1E22BA22B3A00F86303 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		1214F1E72BA22B3C00F86303 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1214F1EA2BA22B3C00F86303 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1214F1EC2BA22B3C00F86303 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1214F1F52BA22E2600F86303 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +54,38 @@
 		1214F1DD2BA22B3A00F86303 /* MillionaireQuest */ = {
 			isa = PBXGroup;
 			children = (
-				1214F1DE2BA22B3A00F86303 /* AppDelegate.swift */,
-				1214F1E02BA22B3A00F86303 /* SceneDelegate.swift */,
-				1214F1E22BA22B3A00F86303 /* ViewController.swift */,
+				1214F1F32BA22CFA00F86303 /* Application */,
+				1214F1F42BA22E0300F86303 /* ViewControlers */,
+				1214F1F22BA22CEB00F86303 /* Resources */,
+			);
+			path = MillionaireQuest;
+			sourceTree = "<group>";
+		};
+		1214F1F22BA22CEB00F86303 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
 				1214F1E72BA22B3C00F86303 /* Assets.xcassets */,
 				1214F1E92BA22B3C00F86303 /* LaunchScreen.storyboard */,
 				1214F1EC2BA22B3C00F86303 /* Info.plist */,
 			);
-			path = MillionaireQuest;
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		1214F1F32BA22CFA00F86303 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				1214F1DE2BA22B3A00F86303 /* AppDelegate.swift */,
+				1214F1E02BA22B3A00F86303 /* SceneDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		1214F1F42BA22E0300F86303 /* ViewControlers */ = {
+			isa = PBXGroup;
+			children = (
+				1214F1F52BA22E2600F86303 /* MenuViewController.swift */,
+			);
+			path = ViewControlers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -134,8 +158,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1214F1E32BA22B3A00F86303 /* ViewController.swift in Sources */,
 				1214F1DF2BA22B3A00F86303 /* AppDelegate.swift in Sources */,
+				1214F1F62BA22E2600F86303 /* MenuViewController.swift in Sources */,
 				1214F1E12BA22B3A00F86303 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -282,7 +306,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UJRW24XH5L;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MillionaireQuest/Info.plist;
+				INFOPLIST_FILE = MillionaireQuest/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -313,7 +337,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UJRW24XH5L;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MillionaireQuest/Info.plist;
+				INFOPLIST_FILE = MillionaireQuest/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
