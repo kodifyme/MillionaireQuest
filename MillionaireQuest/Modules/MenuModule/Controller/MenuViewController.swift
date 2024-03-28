@@ -11,5 +11,9 @@ class MenuViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "Главное меню"
+        view.backgroundColor = .white
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
 }

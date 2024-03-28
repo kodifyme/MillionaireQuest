@@ -12,6 +12,9 @@
 		1214F1E82BA22B3C00F86303 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1214F1E72BA22B3C00F86303 /* Assets.xcassets */; };
 		1214F1EB2BA22B3C00F86303 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1214F1E92BA22B3C00F86303 /* LaunchScreen.storyboard */; };
 		1214F1F62BA22E2600F86303 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1214F1F52BA22E2600F86303 /* MenuViewController.swift */; };
+		1217F23D2BA46E7F00F2EC61 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1217F23C2BA46E7F00F2EC61 /* Question.swift */; };
+		1217F2402BA4718300F2EC61 /* ModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1217F23F2BA4718300F2EC61 /* ModuleBuilder.swift */; };
+		1217F2452BA475D000F2EC61 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1217F2442BA475D000F2EC61 /* MenuView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +25,9 @@
 		1214F1EA2BA22B3C00F86303 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1214F1EC2BA22B3C00F86303 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1214F1F52BA22E2600F86303 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		1217F23C2BA46E7F00F2EC61 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
+		1217F23F2BA4718300F2EC61 /* ModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleBuilder.swift; sourceTree = "<group>"; };
+		1217F2442BA475D000F2EC61 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,7 +61,9 @@
 			isa = PBXGroup;
 			children = (
 				1214F1F32BA22CFA00F86303 /* Application */,
-				1214F1F42BA22E0300F86303 /* ViewControlers */,
+				1217F23E2BA4716D00F2EC61 /* Services */,
+				1217F23B2BA46E7000F2EC61 /* Model */,
+				1214F1F42BA22E0300F86303 /* Modules */,
 				1214F1F22BA22CEB00F86303 /* Resources */,
 			);
 			path = MillionaireQuest;
@@ -80,12 +88,53 @@
 			path = Application;
 			sourceTree = "<group>";
 		};
-		1214F1F42BA22E0300F86303 /* ViewControlers */ = {
+		1214F1F42BA22E0300F86303 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				1217F2412BA475AB00F2EC61 /* MenuModule */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		1217F23B2BA46E7000F2EC61 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1217F23C2BA46E7F00F2EC61 /* Question.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		1217F23E2BA4716D00F2EC61 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				1217F23F2BA4718300F2EC61 /* ModuleBuilder.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		1217F2412BA475AB00F2EC61 /* MenuModule */ = {
+			isa = PBXGroup;
+			children = (
+				1217F2432BA475BE00F2EC61 /* Controller */,
+				1217F2422BA475B800F2EC61 /* View */,
+			);
+			path = MenuModule;
+			sourceTree = "<group>";
+		};
+		1217F2422BA475B800F2EC61 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1217F2442BA475D000F2EC61 /* MenuView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		1217F2432BA475BE00F2EC61 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
 				1214F1F52BA22E2600F86303 /* MenuViewController.swift */,
 			);
-			path = ViewControlers;
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -159,7 +208,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				1214F1DF2BA22B3A00F86303 /* AppDelegate.swift in Sources */,
+				1217F2452BA475D000F2EC61 /* MenuView.swift in Sources */,
+				1217F23D2BA46E7F00F2EC61 /* Question.swift in Sources */,
 				1214F1F62BA22E2600F86303 /* MenuViewController.swift in Sources */,
+				1217F2402BA4718300F2EC61 /* ModuleBuilder.swift in Sources */,
 				1214F1E12BA22B3A00F86303 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
