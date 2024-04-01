@@ -9,11 +9,46 @@ import UIKit
 
 class MenuViewController: UIViewController {
     
+    private let menuView = MenuView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Главное меню"
-        view.backgroundColor = .white
+        setupNavigationbar()
+        setupView()
+        setupConstraints()
+    }
+    
+    private func setupNavigationbar() {
+        title = "Меню"
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationController?.navigationBar.prefersLargeTitles = true
+    }
+    
+    private func setupView() {
+        menuView.delegate = self
+        view.addSubview(menuView)
+    }
+}
+
+extension MenuViewController: MenuViewDelegate {
+    func handlePlayButton() {
+        navigationController?.pushViewController(GameViewController(), animated: true)
+    }
+    
+    func handleResultsButton() {
+        navigationController?.pushViewController(ResultsViewController(), animated: true)
+    }
+}
+
+//MARK: - Setup Constraints
+private extension MenuViewController {
+    func setupConstraints() {
+        NSLayoutConstraint.activate([
+            menuView.topAnchor.constraint(equalTo: view.topAnchor),
+            menuView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            menuView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            menuView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
     }
 }
