@@ -7,9 +7,15 @@
 
 import UIKit
 
+protocol GameViewDelegate: AnyObject {
+    func didChooseAnswer(correct: Bool, at index: Int)
+    func didFinishGame()
+}
+
 class GameView: UIView {
     
     var currentQuestion = 0
+    weak var delegate: GameViewDelegate?
     
     //MARK: - UI
     private let questionCollectionView: UICollectionView = {
@@ -60,7 +66,7 @@ class GameView: UIView {
         
         buttonsStackView = UIStackView(arrangedSubviews: [friendCallButton, audienceHelpButton, fiftyFiftyButton],
                                        axis: .horizontal,
-                                       spacing: 20)
+                                       spacing: 30)
         addSubview(buttonsStackView)
         
     }
@@ -101,7 +107,6 @@ extension GameView: UICollectionViewDataSource {
         
         let answer = questions[currentQuestion].options[indexPath.row]
         cell.configure(with: answer)
-        cell.backgroundColor = .systemGray5
         return cell
     }
 }
@@ -109,7 +114,7 @@ extension GameView: UICollectionViewDataSource {
 //MARK: - UICollectionViewDelegateFlowLayout
 extension GameView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            CGSize(width: 340 / 2, height: 100)
+        CGSize(width: 340 / 2, height: 100)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -118,6 +123,28 @@ extension GameView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         CGSize(width: collectionView.frame.width, height: 100)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        let correctAnswerIndex = questions[currentQuestion].correctAnswer
+        
+        let isCorrect = indexPath.item == correctAnswerIndex
+        delegate?.didChooseAnswer(correct: isCorrect, at: currentQuestion)
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.backgroundColor = isCorrect ? .systemGreen : . systemRed
+       
+        if isCorrect {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.currentQuestion += 1
+                if self.currentQuestion < questions.count {
+                    collectionView.reloadData()
+                } else {
+                    self.delegate?.didFinishGame()
+                    print("Вы прошли игру")
+                }
+            }
+        }
     }
 }
 

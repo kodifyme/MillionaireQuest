@@ -27,8 +27,15 @@ class AnswerCollectionViewCell: UICollectionViewCell {
         setupCellConstraints()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        backgroundColor = .systemGray5
+    }
+    
     private func setupCell() {
-        backgroundColor = .systemGray
+        backgroundColor = .systemGray5
+        layer.cornerRadius = 10
         contentView.addSubview(answerLabel)
     }
     
