@@ -9,7 +9,7 @@ import UIKit
 
 protocol ResultsTableViewDataSource: AnyObject {
     func numberOfItems(inSection section: Int) -> Int
-    func item(at indexPath: IndexPath) -> Double
+    func item(at indexPath: IndexPath) -> GameMemento
 }
 
 class ResultsTableView: UITableView {
@@ -43,8 +43,8 @@ extension ResultsTableView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         guard let dataSource = resultsTableViewDataSource else { return cell }
-        let result = dataSource.item(at: indexPath)
-        cell.textLabel?.text = String(format: "Результат: %.0f%%", result)
+        let memento = dataSource.item(at: indexPath)
+        cell.textLabel?.text = "Результат: \(memento.scoredPercentage)%"
         return cell
     }
 }

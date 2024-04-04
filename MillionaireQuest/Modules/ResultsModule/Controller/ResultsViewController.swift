@@ -18,6 +18,8 @@ class ResultsViewController: UIViewController {
         
         setupNavigationbar()
         setupResultsTableView()
+        gameManager.loadMementos()
+        resultsTableView.reloadData()
     }
     
     private func setupNavigationbar() {
@@ -35,11 +37,11 @@ class ResultsViewController: UIViewController {
 
 //MARK: - ResultsTableViewDataSource
 extension ResultsViewController: ResultsTableViewDataSource {
-    func item(at indexPath: IndexPath) -> Double {
-        gameManager.gameResult[indexPath.row]
+    func item(at indexPath: IndexPath) -> GameMemento {
+        gameManager.mementos[indexPath.row]
     }
     
     func numberOfItems(inSection section: Int) -> Int {
-        gameManager.gameResult.count
+        gameManager.mementos.count
     }
 }

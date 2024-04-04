@@ -8,6 +8,9 @@
 import UIKit
 
 protocol GameViewDelegate: AnyObject {
+    func gameViewDidUseFriendCall()
+    func gameViewDidUseAudienceHelp()
+    func gameViewDidUseFiftyFifty()
     func didChooseAnswer(correct: Bool, at index: Int)
     func didFinishGame()
 }
@@ -31,10 +34,10 @@ class GameView: UIView {
         .createButton(title: "Звонок другу", type: .system, target: self, action: #selector(handleFriendCallButton))
     
     private lazy var audienceHelpButton = CustomButton
-        .createButton(title: "Помощь зала", type: .system, target: self, action: #selector(handleFriendCallButton))
+        .createButton(title: "Помощь зала", type: .system, target: self, action: #selector(handleAudienceHelp))
     
     private lazy var fiftyFiftyButton = CustomButton
-        .createButton(title: "50/50", type: .system, target: self, action: #selector(handleFriendCallButton))
+        .createButton(title: "50/50", type: .system, target: self, action: #selector(handleFiftyFifty))
     
     private var buttonsStackView = UIStackView()
     
@@ -64,7 +67,15 @@ class GameView: UIView {
     }
     
     @objc private func handleFriendCallButton() {
-        print(#function)
+        delegate?.gameViewDidUseFriendCall()
+    }
+    
+    @objc private func handleAudienceHelp() {
+        delegate?.gameViewDidUseAudienceHelp()
+    }
+    
+    @objc private func handleFiftyFifty() {
+        delegate?.gameViewDidUseFiftyFifty()
     }
     
     required init?(coder: NSCoder) {

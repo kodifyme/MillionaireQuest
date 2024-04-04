@@ -32,27 +32,37 @@ class GameViewController: UIViewController {
 }
 
 extension GameViewController: GameViewDelegate {
+    func gameViewDidUseFriendCall() {
+    
+    }
+    
+    func gameViewDidUseAudienceHelp() {
+        
+    }
+    
+    func gameViewDidUseFiftyFifty() {
+        
+    }
+    
     func didFinishGame() {
         gameSession.endSession()
-        let alertController = UIAlertController(title: "Вы победили", message: "Ваш результат верных ответов \(gameSession.gameResult.last!)%", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Вы победили", message: "Ваш результат верных ответов \(String(format: "%.0f", gameSession.mementos.last!.scoredPercentage))%", preferredStyle: .alert)
         let returnActiron = UIAlertAction(title: "Начать заново", style: .default) { _ in
             self.navigationController?.popToRootViewController(animated: true)
         }
         alertController.addAction(returnActiron)
         present(alertController, animated: true)
-        print(gameSession.gameResult)
     }
     
     func didChooseAnswer(correct: Bool, at index: Int) {
         if !correct {
             gameSession.endSession()
-            let alertController = UIAlertController(title: "Вы проиграли", message: "Ваш результат верных ответов \(gameSession.gameResult.last!)%", preferredStyle: .alert)
+            let alertController = UIAlertController(title: "Вы проиграли", message: "Ваш результат верных ответов \(String(format: "%.0f", gameSession.mementos.last!.scoredPercentage))%", preferredStyle: .alert)
             let returnActiron = UIAlertAction(title: "Начать заново", style: .default) { _ in
                 self.navigationController?.popToRootViewController(animated: true)
             }
             alertController.addAction(returnActiron)
             present(alertController, animated: true)
-            print(gameSession.gameResult)
         } else {
             if let session = gameSession.gameSession {
                 session.correctAnswer += 1
