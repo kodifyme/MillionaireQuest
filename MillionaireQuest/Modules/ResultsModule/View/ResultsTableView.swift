@@ -7,7 +7,14 @@
 
 import UIKit
 
+protocol ResultsTableViewDataSource: AnyObject {
+    func numberOfItems(inSection section: Int) -> Int
+    func item(at indexPath: IndexPath) -> Double
+}
+
 class ResultsTableView: UITableView {
+    
+    weak var resultsTableViewDataSource: ResultsTableViewDataSource?
     
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: .zero, style: .insetGrouped)
@@ -30,15 +37,14 @@ class ResultsTableView: UITableView {
 //MARK: - UITableViewDataSource
 extension ResultsTableView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        Game.shared.gameResult.count
+        resultsTableViewDataSource?.numberOfItems(inSection: section) ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        if indexPath.row < Game.shared.gameResult.count {
-            let result = Game.shared.gameResult[indexPath.row]
-            cell.textLabel?.text = String(format: "Результат: %.0f%%", result)
-        }
+        guard let dataSource = resultsTableViewDataSource else { return cell }
+        let result = dataSource.item(at: indexPath)
+        cell.textLabel?.text = String(format: "Результат: %.0f%%", result)
         return cell
     }
 }

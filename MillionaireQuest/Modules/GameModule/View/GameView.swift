@@ -27,26 +27,14 @@ class GameView: UIView {
         return colletctionView
     }()
     
-    private lazy var friendCallButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Звонок другу", for: .normal)
-        button.addTarget(self, action: #selector(handleFriendCallButton), for: .touchUpInside)
-        return button
-    }()
+    private lazy var friendCallButton = CustomButton
+        .createButton(title: "Звонок другу", type: .system, target: self, action: #selector(handleFriendCallButton))
     
-    private lazy var audienceHelpButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Помощь зала", for: .normal)
-        button.addTarget(self, action: #selector(handleFriendCallButton), for: .touchUpInside)
-        return button
-    }()
+    private lazy var audienceHelpButton = CustomButton
+        .createButton(title: "Помощь зала", type: .system, target: self, action: #selector(handleFriendCallButton))
     
-    private lazy var fiftyFiftyButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("50 на 50", for: .normal)
-        button.addTarget(self, action: #selector(handleFriendCallButton), for: .touchUpInside)
-        return button
-    }()
+    private lazy var fiftyFiftyButton = CustomButton
+        .createButton(title: "50/50", type: .system, target: self, action: #selector(handleFriendCallButton))
     
     private var buttonsStackView = UIStackView()
     
@@ -68,7 +56,6 @@ class GameView: UIView {
                                        axis: .horizontal,
                                        spacing: 30)
         addSubview(buttonsStackView)
-        
     }
     
     private func setDelegates() {
