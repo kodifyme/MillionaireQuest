@@ -11,18 +11,23 @@ protocol GameViewDelegate: AnyObject {
     func gameViewDidUseFriendCall()
     func gameViewDidUseAudienceHelp()
     func gameViewDidUseFiftyFifty()
-    func didChooseAnswer(correct: Bool, at index: Int)
-    func didFinishGame()
+    func didChooseAnswer(at index: Int)
 }
 
 class GameView: UIView {
     
-    var currentQuestion = 0
     weak var delegate: GameViewDelegate?
+    
+    var currentQuestion: Question
+    var lastCellIndex: IndexPath?
     
     //MARK: - UI
     private let questionCollectionView: UICollectionView = {
         let collectionViewLayout = UICollectionViewFlowLayout()
+        collectionViewLayout.minimumLineSpacing = 25
+        //Пошарить высоту
+        collectionViewLayout.minimumInteritemSpacing = 10
+        
         let colletctionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
         colletctionView.register(AnswerCollectionViewCell.self, forCellWithReuseIdentifier: AnswerCollectionViewCell.cellIndetifier)
         colletctionView.register(QuestionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: QuestionHeader.identifier)
@@ -39,14 +44,21 @@ class GameView: UIView {
     private lazy var fiftyFiftyButton = CustomButton
         .createButton(title: "50/50", type: .system, target: self, action: #selector(handleFiftyFifty))
     
-    private var buttonsStackView = UIStackView()
+    private lazy var buttonsStackView: UIStackView = {
+        UIStackView(arrangedSubviews: [friendCallButton, audienceHelpButton, fiftyFiftyButton], axis: .horizontal, spacing: 30)
+    }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(question: Question) {
+        currentQuestion = question
+        super.init(frame: .zero)
         
         setupView()
         setDelegates()
         setupConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     //MARK: - Private Methods
@@ -54,10 +66,6 @@ class GameView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         
         addSubview(questionCollectionView)
-        
-        buttonsStackView = UIStackView(arrangedSubviews: [friendCallButton, audienceHelpButton, fiftyFiftyButton],
-                                       axis: .horizontal,
-                                       spacing: 30)
         addSubview(buttonsStackView)
     }
     
@@ -77,16 +85,12 @@ class GameView: UIView {
     @objc private func handleFiftyFifty() {
         delegate?.gameViewDidUseFiftyFifty()
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }
 
 //MARK: - UICollectionViewDataSource
 extension GameView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        questions[currentQuestion].options.count
+        currentQuestion.options.count
     }
     
     //MARK: - Header
@@ -94,8 +98,7 @@ extension GameView: UICollectionViewDataSource {
         
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: QuestionHeader.identifier, for: indexPath) as? QuestionHeader else { return UICollectionReusableView() }
         
-        let question = questions[currentQuestion].question
-        header.configure(with: question)
+        header.configure(with: currentQuestion.question)
         return header
     }
     
@@ -103,7 +106,7 @@ extension GameView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AnswerCollectionViewCell.cellIndetifier, for: indexPath) as? AnswerCollectionViewCell else { return UICollectionViewCell() }
         
-        let answer = questions[currentQuestion].options[indexPath.row]
+        let answer = currentQuestion.options[indexPath.row]
         cell.configure(with: answer)
         return cell
     }
@@ -112,11 +115,8 @@ extension GameView: UICollectionViewDataSource {
 //MARK: - UICollectionViewDelegateFlowLayout
 extension GameView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: 340 / 2, height: 100)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        25
+        let widht = collectionView.frame.width * 0.9 / 2
+        return CGSize(width: widht, height: widht * 0.6)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -125,24 +125,23 @@ extension GameView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        let correctAnswerIndex = questions[currentQuestion].correctAnswer
         
-        let isCorrect = indexPath.item == correctAnswerIndex
-        delegate?.didChooseAnswer(correct: isCorrect, at: currentQuestion)
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.backgroundColor = isCorrect ? .systemGreen : . systemRed
-       
-        if isCorrect {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.currentQuestion += 1
-                if self.currentQuestion < questions.count {
-                    collectionView.reloadData()
-                } else {
-                    self.delegate?.didFinishGame()
-                    print("Вы прошли игру")
-                }
-            }
-        }
+        lastCellIndex = indexPath
+        delegate?.didChooseAnswer(at: indexPath.item)
+    }
+}
+
+//MARK: - GameViewControllerDelegate
+extension GameView: GameViewControllerDelegate {
+    func colorAfter(isCorrect: Bool) {
+        guard let lastCellIndex else { return }
+        let cell = questionCollectionView.cellForItem(at: lastCellIndex)
+        cell?.backgroundColor = isCorrect ? .systemGreen : .systemRed
+    }
+    
+    func refreshWithQuestion(question: Question) {
+        currentQuestion = question
+        questionCollectionView.reloadData()
     }
 }
 
@@ -151,7 +150,7 @@ private extension GameView {
     func setupConstraints() {
         NSLayoutConstraint.activate([
             questionCollectionView.topAnchor.constraint(equalTo: topAnchor),
-            questionCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            questionCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             questionCollectionView.centerXAnchor.constraint(equalTo: centerXAnchor),
             questionCollectionView.heightAnchor.constraint(equalToConstant: 350),
             

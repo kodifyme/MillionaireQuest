@@ -8,11 +8,12 @@
 import UIKit
 
 class Game {
+    
     static let shared = Game()
     private(set) var gameSession: GameSession?
     var mementos: [GameMemento] = []
     
-    private var memntosKey: String { "gameMementos" }
+    private var mementosKey: String { "gameMementos" }
     
     private init() {}
     
@@ -31,14 +32,14 @@ class Game {
         do {
             let encoder = JSONEncoder()
             let data = try encoder.encode(mementos)
-            UserDefaults.standard.set(data, forKey: memntosKey)
+            UserDefaults.standard.set(data, forKey: mementosKey)
         } catch {
             print("Error save results \(error.localizedDescription)")
         }
     }
     
     func loadMementos() {
-        guard let data = UserDefaults.standard.data(forKey: memntosKey),
+        guard let data = UserDefaults.standard.data(forKey: mementosKey),
               let savedMementos = try? JSONDecoder().decode([GameMemento].self, from: data) else { return }
                 mementos = savedMementos
     }

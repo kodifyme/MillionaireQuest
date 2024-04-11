@@ -27,16 +27,16 @@ class QuestionHeader: UICollectionReusableView {
         setupLabelConstraints()
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     private func setupView() {
         addSubview(questionLabel)
     }
     
     func configure(with question: String) {
         questionLabel.text = question
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
 
@@ -46,7 +46,7 @@ private extension QuestionHeader {
         NSLayoutConstraint.activate([
             questionLabel.topAnchor.constraint(equalTo: topAnchor),
             questionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            questionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+            questionLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             questionLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }

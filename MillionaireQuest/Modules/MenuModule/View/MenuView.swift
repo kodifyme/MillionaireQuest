@@ -43,7 +43,9 @@ class MenuView: UIView {
         return button
     }()
     
-    private var buttonStackView = UIStackView()
+    private lazy var buttonStackView: UIStackView = {
+        UIStackView(arrangedSubviews: [playButton, resultsButton], axis: .vertical, spacing: 20)
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -51,14 +53,14 @@ class MenuView: UIView {
         setupConstraints()
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     private func setupView() {
         translatesAutoresizingMaskIntoConstraints = false
         
         addSubview(backgroundImageView)
-        
-        buttonStackView = UIStackView(arrangedSubviews: [playButton, resultsButton],
-                                      axis: .vertical,
-                                      spacing: 20)
         addSubview(buttonStackView)
     }
     
@@ -68,10 +70,6 @@ class MenuView: UIView {
     
     @objc private func handleResultsButtonTap() {
         delegate?.handleResultsButton()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
 

@@ -7,17 +7,38 @@
 
 import UIKit
 
+// hayk: continue from here
+
+// check Results MVC
+// *
+// GameController-GameSession roles -> move calculations to GameSession?
+
+protocol GameViewControllerDelegate: AnyObject {
+    func colorAfter(isCorrect: Bool)
+    func refreshWithQuestion(question: Question)
+}
+
 class GameViewController: UIViewController {
     
-    private var gameSession = Game.shared
-    private let gameView = GameView()
+    private var game = Game.shared
+    weak var delegate: GameViewControllerDelegate?
+    
+    private lazy var gameView: GameView = {
+        GameView(question: currentQuestion)
+    }()
+    private var currentQuestionIndex = 0
+    
+    var currentQuestion: Question {
+        questions[currentQuestionIndex]
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        gameSession.startNewSession()
+        game.startNewSession()
         setAppearance()
         setupView()
+        setDelegates()
         setupConstraints()
     }
     
@@ -27,10 +48,15 @@ class GameViewController: UIViewController {
     
     private func setupView() {
         view.addSubview(gameView)
+    }
+    
+    private func setDelegates() {
         gameView.delegate = self
+        delegate = gameView
     }
 }
 
+//MARK: - GameViewDelegate
 extension GameViewController: GameViewDelegate {
     func gameViewDidUseFriendCall() {
     
@@ -45,8 +71,8 @@ extension GameViewController: GameViewDelegate {
     }
     
     func didFinishGame() {
-        gameSession.endSession()
-        let alertController = UIAlertController(title: "Вы победили", message: "Ваш результат верных ответов \(String(format: "%.0f", gameSession.mementos.last!.scoredPercentage))%", preferredStyle: .alert)
+        game.endSession()
+        let alertController = UIAlertController(title: "Вы победили", message: "Ваш результат верных ответов \(String(format: "%.0f", game.mementos.last!.scoredPercentage))%", preferredStyle: .alert)
         let returnActiron = UIAlertAction(title: "Начать заново", style: .default) { _ in
             self.navigationController?.popToRootViewController(animated: true)
         }
@@ -54,17 +80,35 @@ extension GameViewController: GameViewDelegate {
         present(alertController, animated: true)
     }
     
-    func didChooseAnswer(correct: Bool, at index: Int) {
-        if !correct {
-            gameSession.endSession()
-            let alertController = UIAlertController(title: "Вы проиграли", message: "Ваш результат верных ответов \(String(format: "%.0f", gameSession.mementos.last!.scoredPercentage))%", preferredStyle: .alert)
+    func didChooseAnswer(at index: Int) {
+        let correctAnswerIndex = currentQuestion.correctAnswer
+        
+        let isCorrect = index == correctAnswerIndex
+        delegate?.colorAfter(isCorrect: isCorrect)
+        
+        if isCorrect {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                //weak self
+                self.currentQuestionIndex += 1
+                if self.currentQuestionIndex < questions.count {
+                    self.delegate?.refreshWithQuestion(question: self.currentQuestion)
+                } else {
+                    self.didFinishGame()
+                    print("Вы прошли игру")
+                }
+            }
+        }
+       
+        if !isCorrect {
+            game.endSession()
+            let alertController = UIAlertController(title: "Вы проиграли", message: "Ваш результат верных ответов \(String(format: "%.0f", game.mementos.last!.scoredPercentage))%", preferredStyle: .alert)
             let returnActiron = UIAlertAction(title: "Начать заново", style: .default) { _ in
                 self.navigationController?.popToRootViewController(animated: true)
             }
             alertController.addAction(returnActiron)
             present(alertController, animated: true)
         } else {
-            if let session = gameSession.gameSession {
+            if let session = game.gameSession {
                 session.correctAnswer += 1
             }
         }

@@ -11,14 +11,8 @@ struct Question {
     let question: String
     let options: [String]
     let correctAnswer: Int
-    var friendCall: String?
-    var votePercentage: [Int: Int]?
-    
-    init(question: String, options: [String], correctAnswer: Int) {
-        self.question = question
-        self.options = options
-        self.correctAnswer = correctAnswer
-    }
+//    var friendCall: String?
+//    var votePercentage: [Int: Int]?
 }
 
 let questions: [Question] = [
