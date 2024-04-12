@@ -26,7 +26,6 @@ class ResultsTableView: UITableView {
         backgroundView = BackgroundView()
         register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         dataSource = self
-        delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -45,14 +44,8 @@ extension ResultsTableView: UITableViewDataSource {
         guard let dataSource = resultsTableViewDataSource else { return cell }
         let memento = dataSource.item(at: indexPath)
         cell.textLabel?.text = "Результат: \(memento.scoredPercentage)%"
+        cell.selectionStyle = .none
         return cell
-    }
-}
-
-//MARK: - UITableViewDelegate
-extension ResultsTableView: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
     }
 }
 

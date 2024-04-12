@@ -72,44 +72,35 @@ extension GameViewController: GameViewDelegate {
     
     func didFinishGame() {
         game.endSession()
-        let alertController = UIAlertController(title: "Вы победили", message: "Ваш результат верных ответов \(String(format: "%.0f", game.mementos.last!.scoredPercentage))%", preferredStyle: .alert)
-        let returnActiron = UIAlertAction(title: "Начать заново", style: .default) { _ in
+        let score = game.gameSession?.calculateResult()
+        AlertManager.shared.showVictoryAlert(from: self, score: score!) {
             self.navigationController?.popToRootViewController(animated: true)
         }
-        alertController.addAction(returnActiron)
-        present(alertController, animated: true)
     }
     
     func didChooseAnswer(at index: Int) {
-        let correctAnswerIndex = currentQuestion.correctAnswer
-        
-        let isCorrect = index == correctAnswerIndex
+        let isCorrect = index == currentQuestion.correctAnswer
         delegate?.colorAfter(isCorrect: isCorrect)
         
         if isCorrect {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                //weak self
-                self.currentQuestionIndex += 1
-                if self.currentQuestionIndex < questions.count {
-                    self.delegate?.refreshWithQuestion(question: self.currentQuestion)
+            game.gameSession?.correctAnswer += 1
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                guard let self = self else { return }
+                currentQuestionIndex += 1
+                
+                if currentQuestionIndex < questions.count {
+                    delegate?.refreshWithQuestion(question: currentQuestion)
                 } else {
-                    self.didFinishGame()
+                    didFinishGame()
                     print("Вы прошли игру")
                 }
             }
-        }
-       
-        if !isCorrect {
-            game.endSession()
-            let alertController = UIAlertController(title: "Вы проиграли", message: "Ваш результат верных ответов \(String(format: "%.0f", game.mementos.last!.scoredPercentage))%", preferredStyle: .alert)
-            let returnActiron = UIAlertAction(title: "Начать заново", style: .default) { _ in
-                self.navigationController?.popToRootViewController(animated: true)
-            }
-            alertController.addAction(returnActiron)
-            present(alertController, animated: true)
         } else {
-            if let session = game.gameSession {
-                session.correctAnswer += 1
+            game.endSession()
+            let score = game.gameSession?.calculateResult()
+            AlertManager.shared.showFailureAlert(from: self, score: score!) {
+                self.navigationController?.popToRootViewController(animated: true)
             }
         }
     }

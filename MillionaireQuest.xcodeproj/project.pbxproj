@@ -27,6 +27,7 @@
 		12EDB7782BBAF5B900408BDC /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EDB7772BBAF5B900408BDC /* GameView.swift */; };
 		12EDB77D2BBB3A2F00408BDC /* AnswerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EDB77C2BBB3A2F00408BDC /* AnswerCollectionViewCell.swift */; };
 		12EDB7802BBB45EB00408BDC /* QuestionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EDB77F2BBB45EB00408BDC /* QuestionHeader.swift */; };
+		12FCD0E12BC9488300324D79 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FCD0E02BC9488300324D79 /* AlertManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		12EDB7772BBAF5B900408BDC /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		12EDB77C2BBB3A2F00408BDC /* AnswerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerCollectionViewCell.swift; sourceTree = "<group>"; };
 		12EDB77F2BBB45EB00408BDC /* QuestionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionHeader.swift; sourceTree = "<group>"; };
+		12FCD0E02BC9488300324D79 /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,8 +155,9 @@
 		1217F23E2BA4716D00F2EC61 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				1217F23F2BA4718300F2EC61 /* ModuleBuilder.swift */,
+				12FCD0DF2BC9200600324D79 /* Builder */,
 				120C5A212BBEE540002B001C /* Memento */,
+				12FCD0DE2BC91FE300324D79 /* AlertManager */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -261,6 +264,22 @@
 			path = Header;
 			sourceTree = "<group>";
 		};
+		12FCD0DE2BC91FE300324D79 /* AlertManager */ = {
+			isa = PBXGroup;
+			children = (
+				12FCD0E02BC9488300324D79 /* AlertManager.swift */,
+			);
+			path = AlertManager;
+			sourceTree = "<group>";
+		};
+		12FCD0DF2BC9200600324D79 /* Builder */ = {
+			isa = PBXGroup;
+			children = (
+				1217F23F2BA4718300F2EC61 /* ModuleBuilder.swift */,
+			);
+			path = Builder;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -340,6 +359,7 @@
 				1217F23D2BA46E7F00F2EC61 /* Question.swift in Sources */,
 				12EDB7782BBAF5B900408BDC /* GameView.swift in Sources */,
 				128CEB0A2BB6B6DA003AAD78 /* GameViewController.swift in Sources */,
+				12FCD0E12BC9488300324D79 /* AlertManager.swift in Sources */,
 				120C5A232BBEE55C002B001C /* GameMemento.swift in Sources */,
 				128CEB0C2BB6B6FE003AAD78 /* ResultsViewController.swift in Sources */,
 				12EDB77D2BBB3A2F00408BDC /* AnswerCollectionViewCell.swift in Sources */,
