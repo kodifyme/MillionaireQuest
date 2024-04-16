@@ -9,9 +9,16 @@ import UIKit
 
 // hayk: continue from here
 
-// check Results MVC
+// 1. Memento — split files/roles — memento+orifginator, split game/session
+// 2. GameController-GameSe7ssion roles -> move calculations to GameSess8ion?
+// connect with Game only bu funcs if possible
+// dont change game/session directly from controller
+// dont connect with session from controller
+
+// 3. Results - Controller/View refactoring (MVC)
+// 4. Do ClosurePlayground
+// ux — change alert message or action
 // *
-// GameController-GameSession roles -> move calculations to GameSession?
 
 protocol GameViewControllerDelegate: AnyObject {
     func colorAfter(isCorrect: Bool)
@@ -26,8 +33,8 @@ class GameViewController: UIViewController {
     private lazy var gameView: GameView = {
         GameView(question: currentQuestion)
     }()
-    private var currentQuestionIndex = 0
     
+    private var currentQuestionIndex = 0
     var currentQuestion: Question {
         questions[currentQuestionIndex]
     }
@@ -44,6 +51,7 @@ class GameViewController: UIViewController {
     
     private func setAppearance() {
         view.backgroundColor = .white
+        navigationItem.hidesBackButton = true
     }
     
     private func setupView() {
@@ -58,6 +66,7 @@ class GameViewController: UIViewController {
 
 //MARK: - GameViewDelegate
 extension GameViewController: GameViewDelegate {
+    
     func gameViewDidUseFriendCall() {
     
     }
@@ -70,10 +79,15 @@ extension GameViewController: GameViewDelegate {
         
     }
     
-    func didFinishGame() {
+    func didFinishGame(type: AlertManager.AlertType) {
         game.endSession()
-        let score = game.gameSession?.calculateResult()
-        AlertManager.shared.showVictoryAlert(from: self, score: score!) {
+        guard let score = game.gameSession?.calculateResult() else { return }
+        AlertManager.shared.showAlert(type: type, from: self, score: score) {
+            self.currentQuestionIndex = 0
+            self.game.startNewSession()
+            self.delegate?.refreshWithQuestion(question: self.currentQuestion)
+            
+        } exitCompletion: {
             self.navigationController?.popToRootViewController(animated: true)
         }
     }
@@ -92,16 +106,12 @@ extension GameViewController: GameViewDelegate {
                 if currentQuestionIndex < questions.count {
                     delegate?.refreshWithQuestion(question: currentQuestion)
                 } else {
-                    didFinishGame()
+                    didFinishGame(type: .victory)
                     print("Вы прошли игру")
                 }
             }
         } else {
-            game.endSession()
-            let score = game.gameSession?.calculateResult()
-            AlertManager.shared.showFailureAlert(from: self, score: score!) {
-                self.navigationController?.popToRootViewController(animated: true)
-            }
+            didFinishGame(type: .failure)
         }
     }
 }

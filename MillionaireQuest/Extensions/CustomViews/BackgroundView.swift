@@ -19,7 +19,7 @@ class BackgroundView: UIView {
         super.init(frame: frame)
         
         addSubview(backgroundImageView)
-        backgroundImageView.frame = self.bounds
+        backgroundImageView.frame = bounds
         backgroundImageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     }
     

@@ -25,8 +25,6 @@ class GameView: UIView {
     private let questionCollectionView: UICollectionView = {
         let collectionViewLayout = UICollectionViewFlowLayout()
         collectionViewLayout.minimumLineSpacing = 25
-        //Пошарить высоту
-        collectionViewLayout.minimumInteritemSpacing = 10
         
         let colletctionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
         colletctionView.register(AnswerCollectionViewCell.self, forCellWithReuseIdentifier: AnswerCollectionViewCell.cellIndetifier)

@@ -1,5 +1,5 @@
 //
-//  GameOriginator.swift
+//  GameSession.swift
 //  MillionaireQuest
 //
 //  Created by KOДИ on 04.04.2024.
