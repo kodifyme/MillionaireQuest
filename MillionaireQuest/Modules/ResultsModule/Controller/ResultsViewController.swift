@@ -7,16 +7,11 @@
 
 import UIKit
 
-protocol ResultsViewControllerDelegate: AnyObject {
-    func reloadTable()
-}
-
 class ResultsViewController: UIViewController {
     
     var gameCaretaker = GameCaretaker()
     
     private let resultsTableView = ResultsTableView()
-    weak var delegate: ResultsViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,9 +19,7 @@ class ResultsViewController: UIViewController {
         setupNavigationbar()
         setupResultsTableView()
         setupConstraints()
-        setDelegates()
         gameCaretaker.loadMementos()
-        delegate?.reloadTable()   // MVC
     }
     
     private func setupNavigationbar() {
@@ -36,30 +29,8 @@ class ResultsViewController: UIViewController {
     }
     
     private func setupResultsTableView() {
-        /*resultsTableView.resultsTableViewDataSource = self*/  //View role
         view.addSubview(resultsTableView)
-    }
-    
-    private func setDelegates() {
-        resultsTableView.resultsTableViewDataSource = self
-        delegate = resultsTableView
-    }
-}
-
-//MARK: - ResultsTableViewDataSource
-extension ResultsViewController: ResultsTableViewDataSource { //View role
-    
-    // controller connects gamemanager ->
-    // view gives mementos (not gamemanager) ->
-    // while initing or via viewdelegate methods
-    
-    
-    func item(at indexPath: IndexPath) -> GameMemento {
-        gameCaretaker.mementos[indexPath.row]
-    }
-    
-    func numberOfItems(inSection section: Int) -> Int {
-        gameCaretaker.mementos.count
+        resultsTableView.resultsTableViewDataSource.results = gameCaretaker.mementos
     }
 }
 
