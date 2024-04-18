@@ -9,6 +9,4 @@ import UIKit
 
 struct GameMemento: Codable {
     let scoredPercentage: Double
-    
-    //TODO: Date?
 }

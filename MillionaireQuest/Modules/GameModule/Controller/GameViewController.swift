@@ -9,7 +9,6 @@ import UIKit
 
 // hayk: continue from here
 
-// 1. Memento — split files/roles — memento+orifginator, split game/session
 // 2. GameController-GameSe7ssion roles -> move calculations to GameSess8ion?
 // connect with Game only bu funcs if possible
 // dont change game/session directly from controller
@@ -17,8 +16,11 @@ import UIKit
 
 // 3. Results - Controller/View refactoring (MVC)
 // 4. Do ClosurePlayground
-// ux — change alert message or action
 // *
+
+//complete
+// 1. Memento — split files/roles — memento+orifginator, split game/session
+/* // ux — change alert message or action*/
 
 protocol GameViewControllerDelegate: AnyObject {
     func colorAfter(isCorrect: Bool)
@@ -52,6 +54,7 @@ class GameViewController: UIViewController {
     private func setAppearance() {
         view.backgroundColor = .white
         navigationItem.hidesBackButton = true
+        navigationItem.largeTitleDisplayMode = .never
     }
     
     private func setupView() {
@@ -80,25 +83,24 @@ extension GameViewController: GameViewDelegate {
     }
     
     func didFinishGame(type: AlertManager.AlertType) {
-        game.endSession()
         guard let score = game.gameSession?.calculateResult() else { return }
+        game.endSession()
         AlertManager.shared.showAlert(type: type, from: self, score: score) {
             self.currentQuestionIndex = 0
             self.game.startNewSession()
             self.delegate?.refreshWithQuestion(question: self.currentQuestion)
-            
         } exitCompletion: {
             self.navigationController?.popToRootViewController(animated: true)
         }
     }
     
     func didChooseAnswer(at index: Int) {
-        let isCorrect = index == currentQuestion.correctAnswer
+        guard let gameSession = game.gameSession else { return }
+        let isCorrect = gameSession.checkAnswer(at: index, for: currentQuestion)
+        
         delegate?.colorAfter(isCorrect: isCorrect)
         
         if isCorrect {
-            game.gameSession?.correctAnswer += 1
-            
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
                 guard let self = self else { return }
                 currentQuestionIndex += 1

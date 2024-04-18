@@ -14,6 +14,8 @@ protocol ResultsTableViewDataSource: AnyObject {
 
 class ResultsTableView: UITableView {
     
+    let indetifier = "cell"
+    
     weak var resultsTableViewDataSource: ResultsTableViewDataSource?
     
     override init(frame: CGRect, style: UITableView.Style) {
@@ -22,14 +24,15 @@ class ResultsTableView: UITableView {
         setupTableView()
     }
     
-    private func setupTableView() {
-        backgroundView = BackgroundView()
-        register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        dataSource = self
-    }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupTableView() {
+        translatesAutoresizingMaskIntoConstraints = false
+        backgroundView = BackgroundView()
+        register(UITableViewCell.self, forCellReuseIdentifier: indetifier)
+        dataSource = self
     }
 }
 
@@ -40,7 +43,7 @@ extension ResultsTableView: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: indetifier, for: indexPath)
         guard let dataSource = resultsTableViewDataSource else { return cell }
         let memento = dataSource.item(at: indexPath)
         cell.textLabel?.text = "Результат: \(memento.scoredPercentage)%"
@@ -49,3 +52,9 @@ extension ResultsTableView: UITableViewDataSource {
     }
 }
 
+//MARK: - ResultsViewControllerDelegate
+extension ResultsTableView: ResultsViewControllerDelegate {
+    func reloadTable() {
+        reloadData()
+    }
+}

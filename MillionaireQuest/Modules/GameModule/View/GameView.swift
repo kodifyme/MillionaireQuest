@@ -43,7 +43,7 @@ class GameView: UIView {
         .createButton(title: "50/50", type: .system, target: self, action: #selector(handleFiftyFifty))
     
     private lazy var buttonsStackView: UIStackView = {
-        UIStackView(arrangedSubviews: [friendCallButton, audienceHelpButton, fiftyFiftyButton], axis: .horizontal, spacing: 30)
+        UIStackView(arrangedSubviews: [friendCallButton, audienceHelpButton, fiftyFiftyButton], axis: .vertical, spacing: 30)
     }()
     
     init(question: Question) {

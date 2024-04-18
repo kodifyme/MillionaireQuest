@@ -11,8 +11,12 @@ class GameSession {
     var totalQuestions = questions.count
     var correctAnswer = 0
     
-    func createMemento() -> GameMemento {
-        GameMemento(scoredPercentage: calculateResult())
+    func checkAnswer(at index: Int, for question: Question) -> Bool {
+        let isCorrect = index == question.correctAnswer
+        if isCorrect {
+            correctAnswer += 1
+        }
+        return isCorrect
     }
     
     func calculateResult() -> Double {
