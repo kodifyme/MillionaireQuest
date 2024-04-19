@@ -7,6 +7,6 @@
 
 import UIKit
 
-struct GameMemento: Codable {
+struct RecordsOriginator: Codable {
     let scoredPercentage: Double
 }

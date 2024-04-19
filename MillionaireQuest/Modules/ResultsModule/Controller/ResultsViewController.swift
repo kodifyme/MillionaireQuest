@@ -7,11 +7,21 @@
 
 import UIKit
 
+protocol ResultsViewControllerDelegate: AnyObject {
+    func setResults(_ results: [RecordsOriginator])
+}
+
 class ResultsViewController: UIViewController {
     
-    var gameCaretaker = GameCaretaker()
+    let recordsKeeper = RecordsKeeper()
     
-    private let resultsTableView = ResultsTableView()
+    private lazy var resultsTableView: ResultsTableView = {
+        var view = ResultsTableView()
+        delegate = view
+        return view
+    }()
+    
+    weak var delegate: ResultsViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,7 +29,6 @@ class ResultsViewController: UIViewController {
         setupNavigationbar()
         setupResultsTableView()
         setupConstraints()
-        gameCaretaker.loadMementos()
     }
     
     private func setupNavigationbar() {
@@ -30,7 +39,7 @@ class ResultsViewController: UIViewController {
     
     private func setupResultsTableView() {
         view.addSubview(resultsTableView)
-        resultsTableView.resultsTableViewDataSource.results = gameCaretaker.mementos
+        delegate?.setResults(recordsKeeper.load())
     }
 }
 

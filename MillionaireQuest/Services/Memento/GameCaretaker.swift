@@ -7,37 +7,21 @@
 
 import Foundation
 
+typealias GameMemento = Data
+
 class GameCaretaker {
-    private(set) var mementos: [GameMemento] = []
-    private var mementosKey: String { "gameMementos" }
     
-    init() {
-        loadMementos()
-    }
-    
-    func createMemento(for session: GameSession) {
-        let memento = GameMemento(scoredPercentage: session.calculateResult())
-        saveMemento(memento)
-    }
-    
-    private func saveMemento(_ memento: GameMemento) {
-        mementos.append(memento)
-        saveMementos()
-    }
-    
-    private func saveMementos() {
+    func saveMementos(_ mementos: [RecordsOriginator], key: String) {
         do {
-            let encoder = JSONEncoder()
-            let data = try encoder.encode(mementos)
-            UserDefaults.standard.set(data, forKey: mementosKey)
+            let data = try JSONEncoder().encode(mementos)
+            UserDefaults.standard.set(data, forKey: key)
         } catch {
             print("Ошибка при сохранении результатов \(error.localizedDescription)")
         }
     }
     
-    func loadMementos() {
-        guard let data = UserDefaults.standard.data(forKey: mementosKey),
-              let savedMementos = try? JSONDecoder().decode([GameMemento].self, from: data) else { return }
-        mementos = savedMementos
+    func loadMementos(for key: String) -> [RecordsOriginator] {
+        guard let data = UserDefaults.standard.data(forKey: key) else { return [] }
+        return (try? JSONDecoder().decode([RecordsOriginator].self, from: data)) ?? []
     }
 }

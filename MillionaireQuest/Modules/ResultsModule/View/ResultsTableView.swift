@@ -11,7 +11,7 @@ class ResultsTableView: UITableView {
     
     let identifier = "cell"
     
-    var resultsTableViewDataSource = ResultsTableViewDataSource()
+    lazy var resultsTableViewDataSource = ResultsTableViewDataSource(identifier: identifier)
     
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: .zero, style: .insetGrouped)
@@ -28,5 +28,12 @@ class ResultsTableView: UITableView {
         backgroundView = BackgroundView()
         register(UITableViewCell.self, forCellReuseIdentifier: identifier)
         dataSource = resultsTableViewDataSource
+    }
+}
+
+//MARK: - ResultsViewControllerDelegate
+extension ResultsTableView: ResultsViewControllerDelegate {
+    func setResults(_ results: [RecordsOriginator]) {
+        resultsTableViewDataSource.results = results
     }
 }

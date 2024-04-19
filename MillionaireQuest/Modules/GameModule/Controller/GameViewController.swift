@@ -7,20 +7,8 @@
 
 import UIKit
 
-// hayk: continue from here
+// 1. move some states(calculations) to Session
 
-// 2. GameController-GameSe7ssion roles -> move calculations to GameSess8ion?
-// connect with Game only bu funcs if possible
-// dont change game/session directly from controller
-// dont connect with session from controller
-
-// 3. Results - Controller/View refactoring (MVC)
-// 4. Do ClosurePlayground
-// *
-
-//complete
-// 1. Memento — split files/roles — memento+orifginator, split game/session
-/* // ux — change alert message or action*/
 
 protocol GameViewControllerDelegate: AnyObject {
     func colorAfter(isCorrect: Bool)
@@ -31,20 +19,16 @@ class GameViewController: UIViewController {
     
     private var game = Game.shared
     weak var delegate: GameViewControllerDelegate?
+    private var gameSession = GameSession()
     
     private lazy var gameView: GameView = {
-        GameView(question: currentQuestion)
+        GameView(question: gameSession.currentQuestion)
     }()
-    
-    private var currentQuestionIndex = 0
-    var currentQuestion: Question {
-        questions[currentQuestionIndex]
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        game.startNewSession()
+        startNewSession()
         setAppearance()
         setupView()
         setDelegates()
@@ -65,13 +49,18 @@ class GameViewController: UIViewController {
         gameView.delegate = self
         delegate = gameView
     }
+    
+    private func startNewSession() {
+        gameSession = GameSession()
+        game.startNewSession(gameSession)
+    }
 }
 
 //MARK: - GameViewDelegate
 extension GameViewController: GameViewDelegate {
     
     func gameViewDidUseFriendCall() {
-    
+        
     }
     
     func gameViewDidUseAudienceHelp() {
@@ -83,34 +72,30 @@ extension GameViewController: GameViewDelegate {
     }
     
     func didFinishGame(type: AlertManager.AlertType) {
-        guard let score = game.gameSession?.calculateResult() else { return }
+        let score = gameSession.calculateResult()
         game.endSession()
         AlertManager.shared.showAlert(type: type, from: self, score: score) {
-            self.currentQuestionIndex = 0
-            self.game.startNewSession()
-            self.delegate?.refreshWithQuestion(question: self.currentQuestion)
+            self.startNewSession()
+            self.delegate?.refreshWithQuestion(question: self.gameSession.currentQuestion)
         } exitCompletion: {
             self.navigationController?.popToRootViewController(animated: true)
         }
     }
     
     func didChooseAnswer(at index: Int) {
-        guard let gameSession = game.gameSession else { return }
-        let isCorrect = gameSession.checkAnswer(at: index, for: currentQuestion)
-        
+        let isCorrect = gameSession.checkAnswer(at: index)
         delegate?.colorAfter(isCorrect: isCorrect)
         
         if isCorrect {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-                guard let self = self else { return }
-                currentQuestionIndex += 1
-                
-                if currentQuestionIndex < questions.count {
-                    delegate?.refreshWithQuestion(question: currentQuestion)
-                } else {
-                    didFinishGame(type: .victory)
+                guard let self = self,
+                      let nextQuestion = gameSession.nextQuestion() else {
+                    
+                    self?.didFinishGame(type: .victory)
                     print("Вы прошли игру")
+                    return
                 }
+                self.delegate?.refreshWithQuestion(question: nextQuestion)
             }
         } else {
             didFinishGame(type: .failure)

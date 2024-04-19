@@ -9,8 +9,13 @@ import UIKit
 
 class ResultsTableViewDataSource: NSObject, UITableViewDataSource {
     
-    let identifier = "cell"
-    var results = [GameMemento]()
+    private let identifier: String
+    var results = [RecordsOriginator]()
+    
+    init(identifier: String) {
+        self.identifier = identifier
+        super.init()
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         results.count
