@@ -33,7 +33,7 @@ class ResultsViewController: UIViewController {
     
     private func setupNavigationbar() {
         title = "Результаты"
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationItem.largeTitleDisplayMode = .never
     }
     

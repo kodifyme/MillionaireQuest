@@ -10,6 +10,7 @@ import UIKit
 protocol MenuViewDelegate: AnyObject {
     func handlePlayButton()
     func handleResultsButton()
+    func handleSettingsButton()
 }
 
 class MenuView: UIView {
@@ -43,8 +44,18 @@ class MenuView: UIView {
         return button
     }()
     
+    private lazy var settingsButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Настройки", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = .boldSystemFont(ofSize: 25)
+        button.addTarget(self, action: #selector(handleSettingsButtonTap), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     private lazy var buttonStackView: UIStackView = {
-        UIStackView(arrangedSubviews: [playButton, resultsButton], axis: .vertical, spacing: 20)
+        UIStackView(arrangedSubviews: [playButton, resultsButton, settingsButton], axis: .vertical, spacing: 20)
     }()
     
     override init(frame: CGRect) {
@@ -70,6 +81,10 @@ class MenuView: UIView {
     
     @objc private func handleResultsButtonTap() {
         delegate?.handleResultsButton()
+    }
+    
+    @objc private func handleSettingsButtonTap() {
+        delegate?.handleSettingsButton()
     }
 }
 
