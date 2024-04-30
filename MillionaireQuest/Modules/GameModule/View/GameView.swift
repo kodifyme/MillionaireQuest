@@ -27,7 +27,7 @@ class GameView: UIView {
         collectionViewLayout.minimumLineSpacing = 25
         
         let colletctionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
-        colletctionView.register(AnswerCollectionViewCell.self, forCellWithReuseIdentifier: AnswerCollectionViewCell.cellIndetifier)
+        colletctionView.register(AnswerCollectionViewCell.self, forCellWithReuseIdentifier: AnswerCollectionViewCell.cellIdentifier)
         colletctionView.register(QuestionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: QuestionHeader.identifier)
         colletctionView.translatesAutoresizingMaskIntoConstraints = false
         return colletctionView
@@ -102,7 +102,7 @@ extension GameView: UICollectionViewDataSource {
     
     //MARK: - Cell
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AnswerCollectionViewCell.cellIndetifier, for: indexPath) as? AnswerCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AnswerCollectionViewCell.cellIdentifier, for: indexPath) as? AnswerCollectionViewCell else { return UICollectionViewCell() }
         
         let answer = currentQuestion.options[indexPath.row]
         cell.configure(with: answer)
@@ -153,7 +153,8 @@ private extension GameView {
             questionCollectionView.heightAnchor.constraint(equalToConstant: 350),
             
             buttonsStackView.topAnchor.constraint(equalTo: questionCollectionView.bottomAnchor, constant: 50),
-            buttonsStackView.centerXAnchor.constraint(equalTo: centerXAnchor)
+            buttonsStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            buttonsStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 40)
         ])
     }
 }

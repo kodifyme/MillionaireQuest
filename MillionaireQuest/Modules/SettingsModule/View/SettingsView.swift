@@ -16,12 +16,26 @@ class SettingsView: UIView {
         return imageView
     }()
     
-    private lazy var questionTypeSegmentControl: UISegmentedControl = {
+    private let questionTypeLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Порядок вопросов"
+        label.textAlignment = .center
+        label.textColor = .white
+        label.font = .boldSystemFont(ofSize: 19)
+        return label
+    }()
+    
+    lazy var questionTypeSegmentControl: UISegmentedControl = {
         let segmentControl = UISegmentedControl(items: ["Последовательно", "Рандомно"])
         segmentControl.selectedSegmentIndex = 0
-        segmentControl.addTarget(self, action: #selector(segmentChanged), for: .touchUpInside)
-        segmentControl.translatesAutoresizingMaskIntoConstraints = false
+        segmentControl.addTarget(self, action: #selector(segmentChanged), for: .valueChanged)
+        segmentControl.backgroundColor = .white
+        segmentControl.selectedSegmentTintColor = .systemGreen
         return segmentControl
+    }()
+    
+    private lazy var questionTypeStackView: UIStackView = {
+        UIStackView(arrangedSubviews: [questionTypeLabel, questionTypeSegmentControl], axis: .vertical, spacing: 20)
     }()
     
     override init(frame: CGRect) {
@@ -39,7 +53,7 @@ class SettingsView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         
         addSubview(backgroundImageView)
-        addSubview(questionTypeSegmentControl)
+        addSubview(questionTypeStackView)
     }
     
     @objc private func segmentChanged() {
@@ -56,8 +70,8 @@ private extension SettingsView {
             backgroundImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
             backgroundImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-            questionTypeSegmentControl.topAnchor.constraint(equalTo: topAnchor, constant: 130),
-            questionTypeSegmentControl.centerXAnchor.constraint(equalTo: centerXAnchor)
+            questionTypeStackView.topAnchor.constraint(equalTo: topAnchor, constant: 130),
+            questionTypeStackView.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
     }
 }

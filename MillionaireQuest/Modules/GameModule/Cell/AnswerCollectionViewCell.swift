@@ -9,7 +9,7 @@ import UIKit
 
 class AnswerCollectionViewCell: UICollectionViewCell {
     
-    static let cellIndetifier = "AnswerCollectionViewCell"
+    static let cellIdentifier = "AnswerCollectionViewCell"
     
     private let answerLabel: UILabel = {
         let label = UILabel()
