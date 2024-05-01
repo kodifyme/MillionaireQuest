@@ -12,6 +12,7 @@ protocol GameViewDelegate: AnyObject {
     func gameViewDidUseAudienceHelp()
     func gameViewDidUseFiftyFifty()
     func didChooseAnswer(at index: Int)
+    func setupObservers()
 }
 
 class GameView: UIView {
@@ -22,6 +23,25 @@ class GameView: UIView {
     var lastCellIndex: IndexPath?
     
     //MARK: - UI
+    private let questionNumberLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let correctPercentageLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.textColor = .systemGreen
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var labelsStackView: UIStackView = {
+        UIStackView(arrangedSubviews: [questionNumberLabel, correctPercentageLabel], axis: .vertical, spacing: 15)
+    }()
+    
     private let questionCollectionView: UICollectionView = {
         let collectionViewLayout = UICollectionViewFlowLayout()
         collectionViewLayout.minimumLineSpacing = 25
@@ -63,6 +83,7 @@ class GameView: UIView {
     private func setupView() {
         translatesAutoresizingMaskIntoConstraints = false
         
+        addSubview(labelsStackView)
         addSubview(questionCollectionView)
         addSubview(buttonsStackView)
     }
@@ -141,18 +162,29 @@ extension GameView: GameViewControllerDelegate {
         currentQuestion = question
         questionCollectionView.reloadData()
     }
+    
+    func setQuestionNumber(_ value: Int) {
+        questionNumberLabel.text = "Вопрос: \(value)"
+    }
+    
+    func setCorrectPercentage(_ value: Double) {
+        correctPercentageLabel.text = "Процент правильных ответов: \(value)"
+    }
 }
 
 //MARK: - Constraints
 private extension GameView {
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            questionCollectionView.topAnchor.constraint(equalTo: topAnchor),
+            labelsStackView.topAnchor.constraint(equalTo: topAnchor),
+            labelsStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            
+            questionCollectionView.topAnchor.constraint(equalTo: labelsStackView.bottomAnchor),
             questionCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             questionCollectionView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            questionCollectionView.heightAnchor.constraint(equalToConstant: 350),
+            questionCollectionView.heightAnchor.constraint(equalToConstant: 400),
             
-            buttonsStackView.topAnchor.constraint(equalTo: questionCollectionView.bottomAnchor, constant: 50),
+            buttonsStackView.topAnchor.constraint(equalTo: questionCollectionView.bottomAnchor, constant: 10),
             buttonsStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
             buttonsStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 40)
         ])

@@ -13,6 +13,8 @@ import UIKit
 protocol GameViewControllerDelegate: AnyObject {
     func colorAfter(isCorrect: Bool)
     func refreshWithQuestion(question: Question)
+    func setQuestionNumber(_ value: Int)
+    func setCorrectPercentage(_ value: Double)
 }
 
 class GameViewController: UIViewController {
@@ -32,6 +34,7 @@ class GameViewController: UIViewController {
         setAppearance()
         setupView()
         setDelegates()
+        updateUI()
         setupConstraints()
     }
     
@@ -53,6 +56,12 @@ class GameViewController: UIViewController {
     private func startNewSession() {
         gameSession = GameSession()
         game.startNewSession(gameSession)
+        setupObservers()
+    }
+    
+    private func updateUI() {
+        delegate?.setQuestionNumber(gameSession.currentQuestionNumber.value)
+        delegate?.setCorrectPercentage(gameSession.correctAnswerPercentage.value)
     }
 }
 
@@ -100,6 +109,17 @@ extension GameViewController: GameViewDelegate {
         } else {
             didFinishGame(type: .failure)
         }
+    }
+    
+    func setupObservers() {
+        gameSession.currentQuestionNumber.bind { [weak self] number in
+            self?.delegate?.setQuestionNumber(number)
+        }
+        
+        gameSession.correctAnswerPercentage.bind { [weak self] number in
+            self?.delegate?.setCorrectPercentage(number)
+        }
+        updateUI()
     }
 }
 
