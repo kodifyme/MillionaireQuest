@@ -123,7 +123,7 @@ extension GameViewController: GameViewDelegate {
     }
 }
 
-//MARK: - Constraints
+//MARK: - Setup Constraints
 private extension GameViewController {
     func setupConstraints() {
         NSLayoutConstraint.activate([

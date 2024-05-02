@@ -48,7 +48,7 @@ class AnswerCollectionViewCell: UICollectionViewCell {
     }
 }
 
-//MARK: - Constraints
+//MARK: - Setup Constraints
 private extension AnswerCollectionViewCell {
     func setupCellConstraints() {
         NSLayoutConstraint.activate([

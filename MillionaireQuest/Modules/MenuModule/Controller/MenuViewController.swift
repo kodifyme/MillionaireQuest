@@ -43,6 +43,10 @@ extension MenuViewController: MenuViewDelegate {
     func handleSettingsButton() {
         navigationController?.pushViewController(SettingsViewController(), animated: true)
     }
+    
+    func handleAddQuestionButton() {
+        navigationController?.pushViewController(AddQuestionViewController(), animated: true)
+    }
 }
 
 //MARK: - Setup Constraints

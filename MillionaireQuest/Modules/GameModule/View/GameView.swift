@@ -168,11 +168,11 @@ extension GameView: GameViewControllerDelegate {
     }
     
     func setCorrectPercentage(_ value: Double) {
-        correctPercentageLabel.text = "Процент правильных ответов: \(value)"
+        correctPercentageLabel.text = "Процент правильных ответов: \(value) %"
     }
 }
 
-//MARK: - Constraints
+//MARK: - Setup Constraints
 private extension GameView {
     func setupConstraints() {
         NSLayoutConstraint.activate([

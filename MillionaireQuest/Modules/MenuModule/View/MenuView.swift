@@ -11,6 +11,7 @@ protocol MenuViewDelegate: AnyObject {
     func handlePlayButton()
     func handleResultsButton()
     func handleSettingsButton()
+    func handleAddQuestionButton()
 }
 
 class MenuView: UIView {
@@ -54,8 +55,18 @@ class MenuView: UIView {
         return button
     }()
     
+    private lazy var addQuestionButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Добавить вопрос", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = .boldSystemFont(ofSize: 25)
+        button.addTarget(self, action: #selector(handleAddQuestionButtonTap), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     private lazy var buttonStackView: UIStackView = {
-        UIStackView(arrangedSubviews: [playButton, resultsButton, settingsButton], axis: .vertical, spacing: 20)
+        UIStackView(arrangedSubviews: [playButton, resultsButton, settingsButton, addQuestionButton], axis: .vertical, spacing: 20)
     }()
     
     override init(frame: CGRect) {
@@ -85,6 +96,10 @@ class MenuView: UIView {
     
     @objc private func handleSettingsButtonTap() {
         delegate?.handleSettingsButton()
+    }
+    
+    @objc private func handleAddQuestionButtonTap() {
+        delegate?.handleAddQuestionButton()
     }
 }
 

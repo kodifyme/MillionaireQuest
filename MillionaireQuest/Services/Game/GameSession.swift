@@ -48,8 +48,7 @@ class GameSession {
     }
     
     func updateStatistic() {
-        let percentage = Double(score) / Double(totalQuestions) * 100
-        correctAnswerPercentage.value = percentage
+        correctAnswerPercentage.value = calculateResult()
         currentQuestionNumber.value = currentQuestionIndex + 1
     }
 }

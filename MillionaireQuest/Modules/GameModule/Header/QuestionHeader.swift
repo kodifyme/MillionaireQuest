@@ -40,7 +40,7 @@ class QuestionHeader: UICollectionReusableView {
     }
 }
 
-//MARK: - Constraints
+//MARK: - Setup Constraints
 private extension QuestionHeader {
     func setupLabelConstraints() {
         NSLayoutConstraint.activate([
