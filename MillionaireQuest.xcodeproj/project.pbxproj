@@ -20,9 +20,11 @@
 		1217F2402BA4718300F2EC61 /* ModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1217F23F2BA4718300F2EC61 /* ModuleBuilder.swift */; };
 		1217F2452BA475D000F2EC61 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1217F2442BA475D000F2EC61 /* MenuView.swift */; };
 		123ED9D02BD2999A00C1E539 /* RecordsKeeper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123ED9CF2BD2999A00C1E539 /* RecordsKeeper.swift */; };
+		124CA6B52BE9128E003125B8 /* TableFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124CA6B42BE9128E003125B8 /* TableFooterView.swift */; };
 		12830E4F2BBC68BE00DED6EB /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12830E4E2BBC68BE00DED6EB /* Game.swift */; };
 		12830E512BBC7B7A00DED6EB /* ResultsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12830E502BBC7B7A00DED6EB /* ResultsTableView.swift */; };
 		12830E532BBC834D00DED6EB /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12830E522BBC834D00DED6EB /* BackgroundView.swift */; };
+		1287D14D2BE8B12C00439924 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1287D14C2BE8B12B00439924 /* CustomTextField.swift */; };
 		128CEB022BB6B4C7003AAD78 /* UIStackView + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128CEB012BB6B4C7003AAD78 /* UIStackView + Extensions.swift */; };
 		128CEB0A2BB6B6DA003AAD78 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128CEB092BB6B6DA003AAD78 /* GameViewController.swift */; };
 		128CEB0C2BB6B6FE003AAD78 /* ResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128CEB0B2BB6B6FE003AAD78 /* ResultsViewController.swift */; };
@@ -57,9 +59,11 @@
 		1217F23F2BA4718300F2EC61 /* ModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleBuilder.swift; sourceTree = "<group>"; };
 		1217F2442BA475D000F2EC61 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		123ED9CF2BD2999A00C1E539 /* RecordsKeeper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsKeeper.swift; sourceTree = "<group>"; };
+		124CA6B42BE9128E003125B8 /* TableFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableFooterView.swift; sourceTree = "<group>"; };
 		12830E4E2BBC68BE00DED6EB /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		12830E502BBC7B7A00DED6EB /* ResultsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsTableView.swift; sourceTree = "<group>"; };
 		12830E522BBC834D00DED6EB /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
+		1287D14C2BE8B12B00439924 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		128CEB012BB6B4C7003AAD78 /* UIStackView + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView + Extensions.swift"; sourceTree = "<group>"; };
 		128CEB092BB6B6DA003AAD78 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		128CEB0B2BB6B6FE003AAD78 /* ResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsViewController.swift; sourceTree = "<group>"; };
@@ -94,6 +98,7 @@
 			children = (
 				120C5A1F2BBEAAF8002B001C /* CustomButton.swift */,
 				12830E522BBC834D00DED6EB /* BackgroundView.swift */,
+				1287D14C2BE8B12B00439924 /* CustomTextField.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -223,6 +228,14 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
+		124CA6B32BE9123C003125B8 /* Footer */ = {
+			isa = PBXGroup;
+			children = (
+				124CA6B42BE9128E003125B8 /* TableFooterView.swift */,
+			);
+			path = Footer;
+			sourceTree = "<group>";
+		};
 		128CEB002BB6B4AD003AAD78 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -338,6 +351,7 @@
 		12DEE7492BE3A652001C8C9C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				124CA6B32BE9123C003125B8 /* Footer */,
 				12DEE7502BE3AB16001C8C9C /* Cell */,
 				12DEE74E2BE3A835001C8C9C /* AddQuestionTableView.swift */,
 			);
@@ -481,6 +495,7 @@
 			files = (
 				12B58D402BD19CC80057D5CB /* ResultsTableViewDataSource.swift in Sources */,
 				12830E532BBC834D00DED6EB /* BackgroundView.swift in Sources */,
+				124CA6B52BE9128E003125B8 /* TableFooterView.swift in Sources */,
 				1214F1DF2BA22B3A00F86303 /* AppDelegate.swift in Sources */,
 				1217F2452BA475D000F2EC61 /* MenuView.swift in Sources */,
 				128CEB022BB6B4C7003AAD78 /* UIStackView + Extensions.swift in Sources */,
@@ -497,6 +512,7 @@
 				120C5A232BBEE55C002B001C /* RecordsOriginator.swift in Sources */,
 				1212A0512BE50A63002CAB1B /* QuestionStrategy.swift in Sources */,
 				128CEB0C2BB6B6FE003AAD78 /* ResultsViewController.swift in Sources */,
+				1287D14D2BE8B12C00439924 /* CustomTextField.swift in Sources */,
 				12EDB77D2BBB3A2F00408BDC /* AnswerCollectionViewCell.swift in Sources */,
 				12DEE74F2BE3A835001C8C9C /* AddQuestionTableView.swift in Sources */,
 				12EDB7802BBB45EB00408BDC /* QuestionHeader.swift in Sources */,

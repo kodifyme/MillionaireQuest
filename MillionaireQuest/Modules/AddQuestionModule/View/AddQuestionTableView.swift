@@ -34,16 +34,25 @@ extension AddQuestionTableView: UITableViewDataSource {
         1
     }
     
+    //MARK: - Cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = dequeueReusableCell(withIdentifier: AddQuestionCell.cellIdentifier, for: indexPath) as? AddQuestionCell else { return UITableViewCell() }
         return cell
+    }
+    
+    //MARK: - Footer
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footerView = TableFooterView()
+        return footerView
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        50
     }
 }
 
 extension AddQuestionTableView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        70
+        350
     }
 }
-
-

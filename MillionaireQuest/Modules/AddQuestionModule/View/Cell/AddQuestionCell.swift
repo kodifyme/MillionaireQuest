@@ -11,12 +11,27 @@ class AddQuestionCell: UITableViewCell {
     
     static let cellIdentifier = "AddQuestionCell"
     
-    private let questionTextView: UITextView = {
+    private lazy var questionTextView: UITextView = {
         let textView = UITextView()
-        textView.text = "Введите новый вопрос"
-        textView.textColor = .gray
-        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.layer.borderWidth = 1.0
+        textView.layer.borderColor = UIColor.gray.cgColor
+        textView.font = .boldSystemFont(ofSize: 16)
+        textView.layer.cornerRadius = 5.0
+        textView.text = "Введите вопрос"
+        textView.textColor = .lightGray
+        textView.delegate = self
         return textView
+    }()
+    
+    private lazy var optionATextField = CustomTextField(placeholder: "A: Введите ответ")
+    private lazy var optionBTextField = CustomTextField(placeholder: "B: Введите ответ")
+    private lazy var optionCTextField = CustomTextField(placeholder: "C: Введите ответ")
+    private lazy var optionDTextField = CustomTextField(placeholder: "D: Введите ответ")
+
+    private lazy var allstrackView: UIStackView = {
+        UIStackView(arrangedSubviews: [questionTextView, optionATextField, optionBTextField, optionCTextField, optionDTextField],
+                    axis: .vertical,
+                    spacing: 20)
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -31,7 +46,24 @@ class AddQuestionCell: UITableViewCell {
     }
     
     private func setupCell() {
-        contentView.addSubview(questionTextView)
+        contentView.addSubview(allstrackView)
+    }
+}
+
+//MARK: - UITextViewDelegate
+extension AddQuestionCell: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray {
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "Введите вопрос"
+            textView.textColor = UIColor.lightGray
+        }
     }
 }
 
@@ -39,10 +71,10 @@ class AddQuestionCell: UITableViewCell {
 private extension AddQuestionCell {
     func setupCellConstraints() {
         NSLayoutConstraint.activate([
-            questionTextView.topAnchor.constraint(equalTo: topAnchor),
-            questionTextView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            questionTextView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            questionTextView.heightAnchor.constraint(equalTo: heightAnchor, constant: 50)
+            allstrackView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            allstrackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
+            allstrackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            allstrackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)
         ])
     }
 }

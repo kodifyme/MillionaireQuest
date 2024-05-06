@@ -20,13 +20,18 @@ class AddQuestionViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        title = "Добавьте свой вопрос"
+        title = "Добавить вопрос"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationItem.largeTitleDisplayMode = .never
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Добавить", style: .done, target: self, action: #selector(addQuestionButtonTapped))
     }
     
     private func setupView() {
         view.addSubview(addQuestionTableView)
+    }
+    
+    @objc private func addQuestionButtonTapped() {
+        print(#function)
     }
 }
 
