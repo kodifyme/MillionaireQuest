@@ -8,9 +8,9 @@
 import UIKit
 
 protocol GameViewDelegate: AnyObject {
-    func gameViewDidUseFriendCall()
-    func gameViewDidUseAudienceHelp()
-    func gameViewDidUseFiftyFifty()
+    func didUseFriendCall()
+    func didUseAudienceHelp()
+    func didUseFiftyFifty()
     func didChooseAnswer(at index: Int)
     func setupObservers()
 }
@@ -94,15 +94,21 @@ class GameView: UIView {
     }
     
     @objc private func handleFriendCallButton() {
-        delegate?.gameViewDidUseFriendCall()
+        delegate?.didUseFriendCall()
+        friendCallButton.isEnabled = false
+        friendCallButton.backgroundColor = .systemGray2
     }
     
     @objc private func handleAudienceHelp() {
-        delegate?.gameViewDidUseAudienceHelp()
+        delegate?.didUseAudienceHelp()
+        audienceHelpButton.isEnabled = false
+        audienceHelpButton.backgroundColor = .systemGray2
     }
     
     @objc private func handleFiftyFifty() {
-        delegate?.gameViewDidUseFiftyFifty()
+        delegate?.didUseFiftyFifty()
+        fiftyFiftyButton.isEnabled = false
+        fiftyFiftyButton.backgroundColor = .systemGray2
     }
 }
 

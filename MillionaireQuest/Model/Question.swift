@@ -11,8 +11,6 @@ struct Question {
     let question: String
     let options: [String]
     let correctAnswer: Int
-//    var isFriendCallUsed: Bool = false
-//    var votePercentage: [Int: Int]?
 }
 
 let questions: [Question] = [

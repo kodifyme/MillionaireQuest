@@ -7,8 +7,13 @@
 
 import UIKit
 
-// 1. move some states(calculations) to Session
+// 1. move some states(calculations) to Session – check?
+// 3. Do not access HintUsageFacade directly – make Protocol for access to GameSession
+// 4. GameSession(mode: game.questionsMode) duplicating issue — fix – optional
+// типы паттернов проектирования вопросы на след занятие (где и когда применяются)
+// w5: custom cell with 5 fields and control
 
+// 2. Setttings: select choosed mode, UserDefaults – optional
 
 protocol GameViewControllerDelegate: AnyObject {
     func colorAfter(isCorrect: Bool)
@@ -21,7 +26,10 @@ class GameViewController: UIViewController {
     
     private var game = Game.shared
     weak var delegate: GameViewControllerDelegate?
-    private var gameSession = GameSession()
+    
+    private lazy var gameSession: GameSession = {
+        GameSession(mode: game.questionsMode)
+    }()
     
     private lazy var gameView: GameView = {
         GameView(question: gameSession.currentQuestion)
@@ -30,11 +38,10 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setDelegates()
         startNewSession()
         setAppearance()
         setupView()
-        setDelegates()
-        updateUI()
         setupConstraints()
     }
     
@@ -54,30 +61,25 @@ class GameViewController: UIViewController {
     }
     
     private func startNewSession() {
-        gameSession = GameSession()
+        gameSession = GameSession(mode: game.questionsMode)
         game.startNewSession(gameSession)
         setupObservers()
-    }
-    
-    private func updateUI() {
-        delegate?.setQuestionNumber(gameSession.currentQuestionNumber.value)
-        delegate?.setCorrectPercentage(gameSession.correctAnswerPercentage.value)
     }
 }
 
 //MARK: - GameViewDelegate
 extension GameViewController: GameViewDelegate {
     
-    func gameViewDidUseFriendCall() {
-        
+    func didUseFriendCall() {
+        print(gameSession.hintUsageFacade.callFriend())
     }
     
-    func gameViewDidUseAudienceHelp() {
-        
+    func didUseAudienceHelp() {
+        print(gameSession.hintUsageFacade.useAuditoryHelp())
     }
     
-    func gameViewDidUseFiftyFifty() {
-        
+    func didUseFiftyFifty() {
+        print(gameSession.hintUsageFacade.use50to50Hint())
     }
     
     func didFinishGame(type: AlertManager.AlertType) {
@@ -119,7 +121,6 @@ extension GameViewController: GameViewDelegate {
         gameSession.correctAnswerPercentage.bind { [weak self] number in
             self?.delegate?.setCorrectPercentage(number)
         }
-        updateUI()
     }
 }
 

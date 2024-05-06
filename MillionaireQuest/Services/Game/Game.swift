@@ -9,11 +9,17 @@ import UIKit
 
 class Game {
     
+    enum QuestionsMode {
+        case sequential, random
+    }
+    
     static let shared = Game()
     private(set) var gameSession: GameSession?
     
     let recordsKeeper = RecordsKeeper()
     private(set) var records = [RecordsOriginator]()
+    
+    var questionsMode: QuestionsMode = .sequential
     
     private init() {
         records = recordsKeeper.load()

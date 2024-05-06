@@ -42,6 +42,7 @@ class SettingsView: UIView {
         super.init(frame: frame)
         
         setupView()
+        loadSegmentState()
         setupConstraints()
     }
     
@@ -56,8 +57,21 @@ class SettingsView: UIView {
         addSubview(questionTypeStackView)
     }
     
+    private func loadSegmentState() {
+        let selectedIndex = UserDefaults.standard.integer(forKey: "selectedSegmentIndex")
+        questionTypeSegmentControl.selectedSegmentIndex = selectedIndex
+    }
+    
     @objc private func segmentChanged() {
+        let selectedIndex = questionTypeSegmentControl.selectedSegmentIndex
+        UserDefaults.standard.set(selectedIndex, forKey: "selectedSegmentIndex")
         
+        switch selectedIndex {
+        case 1:
+            Game.shared.questionsMode = .random
+        default:
+            Game.shared.questionsMode = .sequential
+        }
     }
 }
 

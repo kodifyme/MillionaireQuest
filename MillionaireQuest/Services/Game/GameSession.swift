@@ -8,20 +8,37 @@
 import UIKit
 
 class GameSession {
-    var totalQuestions = questions.count
-    var score = 0
+    
+    private lazy var sessionQuestions: [Question] = {
+        strategy.getQuestions(questions)
+    }()
+    private lazy var totalQuestions = sessionQuestions.count
+    private var score = 0
     
     private var currentQuestionIndex = 0
     var currentQuestion: Question {
-        questions[currentQuestionIndex]
+        sessionQuestions[currentQuestionIndex]
     }
+    
+    private var strategy: QuestionStrategy
+    
+    var hintUsageFacade = HintUsageFacade()
     
     var currentQuestionNumber: Observable<Int>
     var correctAnswerPercentage: Observable<Double>
     
-    init() {
+    init(mode: Game.QuestionsMode) {
+        
+        switch mode {
+        case .sequential:
+            strategy = SequentialQuestions()
+        case .random:
+            strategy = RandomQuestions()
+        }
+        
         currentQuestionNumber = Observable(currentQuestionIndex + 1)
         correctAnswerPercentage = Observable(0.0)
+        updateHints()
     }
     
     func checkAnswer(at index: Int) -> Bool {
@@ -34,9 +51,10 @@ class GameSession {
     }
     
     func nextQuestion() -> Question? {
-        currentQuestionIndex += 1
-        updateStatistic()
-        if currentQuestionIndex < totalQuestions {
+        if currentQuestionIndex + 1 < totalQuestions {
+            currentQuestionIndex += 1
+            updateStatistic()
+            updateHints()
             return currentQuestion
         } else {
             return nil
@@ -50,5 +68,9 @@ class GameSession {
     func updateStatistic() {
         correctAnswerPercentage.value = calculateResult()
         currentQuestionNumber.value = currentQuestionIndex + 1
+    }
+    
+    func updateHints() {
+        hintUsageFacade.currentQuestion = currentQuestion
     }
 }
