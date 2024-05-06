@@ -8,12 +8,12 @@
 import UIKit
 
 // 1. move some states(calculations) to Session – check?
-// 3. Do not access HintUsageFacade directly – make Protocol for access to GameSession
 // 4. GameSession(mode: game.questionsMode) duplicating issue — fix – optional
 // типы паттернов проектирования вопросы на след занятие (где и когда применяются)
-// w5: custom cell with 5 fields and control
 
 // 2. Setttings: select choosed mode, UserDefaults – optional
+// 3. Do not access HintUsageFacade directly – make Protocol for access to GameSession
+// w5: custom cell with 5 fields and control
 
 protocol GameViewControllerDelegate: AnyObject {
     func colorAfter(isCorrect: Bool)
@@ -71,15 +71,15 @@ class GameViewController: UIViewController {
 extension GameViewController: GameViewDelegate {
     
     func didUseFriendCall() {
-        print(gameSession.hintUsageFacade.callFriend())
+        print(gameSession.callFriend())
     }
     
     func didUseAudienceHelp() {
-        print(gameSession.hintUsageFacade.useAuditoryHelp())
+        print(gameSession.useAuditoryHelp())
     }
     
     func didUseFiftyFifty() {
-        print(gameSession.hintUsageFacade.use50to50Hint())
+        print(gameSession.use50to50Hint())
     }
     
     func didFinishGame(type: AlertManager.AlertType) {

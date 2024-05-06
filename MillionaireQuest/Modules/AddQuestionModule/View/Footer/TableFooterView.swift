@@ -11,7 +11,7 @@ class TableFooterView: UIView {
     
     private lazy var addInputFormButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(UIImage(named: "addForm"), for: .normal)
+        button.setImage(UIImage(systemName: "plus.square.on.square"), for: .normal)
         button.addTarget(self, action: #selector(addFormButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
