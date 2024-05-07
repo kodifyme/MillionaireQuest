@@ -56,4 +56,11 @@ class AlertManager {
         alertController.addAction(exitAction)
         controller.present(alertController, animated: true)
     }
+    
+    func showCallFriendAlert(from controller: UIViewController, message: String) {
+        let alertController = UIAlertController(title: "Ответ друга", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .cancel)
+        alertController.addAction(okAction)
+        controller.present(alertController, animated: true)
+    }
 }

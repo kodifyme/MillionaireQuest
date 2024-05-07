@@ -71,7 +71,7 @@ class GameViewController: UIViewController {
 extension GameViewController: GameViewDelegate {
     
     func didUseFriendCall() {
-        print(gameSession.callFriend())
+        AlertManager.shared.showCallFriendAlert(from: self, message: gameSession.callFriend())
     }
     
     func didUseAudienceHelp() {

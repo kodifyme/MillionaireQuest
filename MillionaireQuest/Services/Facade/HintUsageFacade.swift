@@ -28,13 +28,8 @@ class HintUsageFacade {
         }
         var votePercentages = [Int]()
         
-        // refactoring
         for (index, _) in options.enumerated() {
-            if index == correctAnswerIndex {
-                votePercentages.append(70)
-            } else {
-                votePercentages.append(10)
-            }
+            index == correctAnswerIndex ? votePercentages.append(70) : votePercentages.append(10)
         }
         return votePercentages
     }
@@ -49,7 +44,6 @@ class HintUsageFacade {
         
         options.remove(at: correctAnswerIndex)
         hints.append(options.randomElement()!)
-        
         return hints
     }
     
