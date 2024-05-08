@@ -17,6 +17,7 @@ class MenuViewController: UIViewController {
         setupNavigationbar()
         setupView()
         setupConstraints()
+        print(questions.count)
     }
     
     private func setupNavigationbar() {

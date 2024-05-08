@@ -7,9 +7,14 @@
 
 import UIKit
 
+protocol AddQuestionCellDelegate: AnyObject {
+    func getQuestionData(question: String, options: [String], currentAnswer: Int)
+}
+
 class AddQuestionCell: UITableViewCell {
     
     static let cellIdentifier = "AddQuestionCell"
+    weak var delegate: AddQuestionCellDelegate?
     
     private lazy var questionTextView: UITextView = {
         let textView = UITextView()
@@ -27,9 +32,18 @@ class AddQuestionCell: UITableViewCell {
     private lazy var optionBTextField = CustomTextField(placeholder: "B: Введите ответ")
     private lazy var optionCTextField = CustomTextField(placeholder: "C: Введите ответ")
     private lazy var optionDTextField = CustomTextField(placeholder: "D: Введите ответ")
+    
+    private lazy var optionsControl: UISegmentedControl = {
+        let segmentControl = UISegmentedControl(items: ["A", "B", "C", "D"])
+        segmentControl.selectedSegmentIndex = 0
+        segmentControl.backgroundColor = .white
+        segmentControl.selectedSegmentTintColor = .systemGreen
+        segmentControl.translatesAutoresizingMaskIntoConstraints = false
+        return segmentControl
+    }()
 
     private lazy var allstrackView: UIStackView = {
-        UIStackView(arrangedSubviews: [questionTextView, optionATextField, optionBTextField, optionCTextField, optionDTextField],
+        UIStackView(arrangedSubviews: [questionTextView, optionATextField, optionBTextField, optionCTextField, optionDTextField, optionsControl],
                     axis: .vertical,
                     spacing: 20)
     }()
@@ -47,6 +61,17 @@ class AddQuestionCell: UITableViewCell {
     
     private func setupCell() {
         contentView.addSubview(allstrackView)
+    }
+    
+    func updateData() {
+        guard let questionText = questionTextView.text, !questionText.isEmpty,
+              let optionA = optionATextField.text, !optionA.isEmpty,
+              let optionB = optionBTextField.text, !optionB.isEmpty,
+              let optionC = optionCTextField.text, !optionC.isEmpty,
+              let optionD = optionDTextField.text, !optionD.isEmpty else {
+            return
+        }
+        delegate?.getQuestionData(question: questionText, options: [optionA, optionB, optionC, optionD], currentAnswer: optionsControl.selectedSegmentIndex)
     }
 }
 

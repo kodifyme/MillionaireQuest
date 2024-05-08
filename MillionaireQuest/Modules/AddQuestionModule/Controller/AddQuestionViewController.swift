@@ -9,6 +9,7 @@ import UIKit
 
 class AddQuestionViewController: UIViewController {
     
+    let builder = QuestionBuilder()
     private let addQuestionTableView = AddQuestionTableView()
     
     override func viewDidLoad() {
@@ -28,10 +29,36 @@ class AddQuestionViewController: UIViewController {
     
     private func setupView() {
         view.addSubview(addQuestionTableView)
+        addQuestionTableView.customDelegate = self
+    }
+    
+    private func saveQuestion(_ question: Question) {
+        questions.append(question)
+        
+        let caretaker = QuestionCaretaker()
+        caretaker.save(questions: questions)
     }
     
     @objc private func addQuestionButtonTapped() {
-        print(#function)
+        if let newQuestion = builder.build() {
+            print(newQuestion)
+                saveQuestion(newQuestion)
+        } else {
+            print("Error")
+        }
+    }
+}
+
+//MARK: - AddQuestionTableViewDelegate
+extension AddQuestionViewController: AddQuestionTableViewDelegate {
+    func receiveNewQuestion(question: String, options: [String], correctAnswerIndex: Int) {
+        builder.setQuestionText(question)
+            .addOptions(options[0])
+            .addOptions(options[1])
+            .addOptions(options[2])
+            .addOptions(options[3])
+            .setCorrectAnswer(correctAnswerIndex)
+            
     }
 }
 

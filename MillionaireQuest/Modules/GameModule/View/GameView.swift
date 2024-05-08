@@ -174,7 +174,7 @@ extension GameView: GameViewControllerDelegate {
     }
     
     func setCorrectPercentage(_ value: Double) {
-        correctPercentageLabel.text = "Процент правильных ответов: \(value) %"
+        correctPercentageLabel.text = "Процент правильных ответов: \(value.rounded()) %"
     }
 }
 

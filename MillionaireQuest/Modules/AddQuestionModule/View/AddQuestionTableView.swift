@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol AddQuestionTableViewDelegate: AnyObject {
+    func receiveNewQuestion(question: String, options: [String], correctAnswerIndex: Int)
+}
+
 class AddQuestionTableView: UITableView {
+    
+    weak var customDelegate: AddQuestionTableViewDelegate?
     
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: .zero, style: .insetGrouped)
@@ -37,6 +43,7 @@ extension AddQuestionTableView: UITableViewDataSource {
     //MARK: - Cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = dequeueReusableCell(withIdentifier: AddQuestionCell.cellIdentifier, for: indexPath) as? AddQuestionCell else { return UITableViewCell() }
+        cell.delegate = self.inputViewController as? AddQuestionCellDelegate
         return cell
     }
     
@@ -54,5 +61,11 @@ extension AddQuestionTableView: UITableViewDataSource {
 extension AddQuestionTableView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         350
+    }
+}
+
+extension AddQuestionTableView: AddQuestionCellDelegate {
+    func getQuestionData(question: String, options: [String], currentAnswer: Int) {
+        customDelegate?.receiveNewQuestion(question: question, options: options, correctAnswerIndex: currentAnswer)
     }
 }

@@ -7,13 +7,13 @@
 
 import UIKit
 
-struct Question {
+struct Question: Codable {
     let question: String
     let options: [String]
     let correctAnswer: Int
 }
 
-let questions: [Question] = [
+var questions: [Question] = [
     Question(question: "Какой праздник отмечается в мире 1 сентября?", 
              options: ["День Святого Валентина", "Всемирный День мира", "Новый Год", "День борьбы со СПИДом"],
              correctAnswer: 1),
