@@ -7,14 +7,9 @@
 
 import UIKit
 
-protocol AddQuestionCellDelegate: AnyObject {
-    func getQuestionData(question: String, options: [String], currentAnswer: Int)
-}
-
 class AddQuestionCell: UITableViewCell {
     
     static let cellIdentifier = "AddQuestionCell"
-    weak var delegate: AddQuestionCellDelegate?
     
     private lazy var questionTextView: UITextView = {
         let textView = UITextView()
@@ -41,9 +36,16 @@ class AddQuestionCell: UITableViewCell {
         segmentControl.translatesAutoresizingMaskIntoConstraints = false
         return segmentControl
     }()
-
+    
+    private lazy var bottomSpacer: UIView = {
+        let spacer = UIView()
+        spacer.backgroundColor = .black
+        
+        return spacer
+    }()
+    
     private lazy var allstrackView: UIStackView = {
-        UIStackView(arrangedSubviews: [questionTextView, optionATextField, optionBTextField, optionCTextField, optionDTextField, optionsControl],
+        UIStackView(arrangedSubviews: [questionTextView, optionATextField, optionBTextField, optionCTextField, optionDTextField, optionsControl, bottomSpacer],
                     axis: .vertical,
                     spacing: 20)
     }()
@@ -61,17 +63,20 @@ class AddQuestionCell: UITableViewCell {
     
     private func setupCell() {
         contentView.addSubview(allstrackView)
+        contentView.addSubview(bottomSpacer)
     }
     
-    func updateData() {
+    func configure() -> Question? {
         guard let questionText = questionTextView.text, !questionText.isEmpty,
               let optionA = optionATextField.text, !optionA.isEmpty,
               let optionB = optionBTextField.text, !optionB.isEmpty,
               let optionC = optionCTextField.text, !optionC.isEmpty,
               let optionD = optionDTextField.text, !optionD.isEmpty else {
-            return
+            print("Не все поля заполнены")
+            return nil
         }
-        delegate?.getQuestionData(question: questionText, options: [optionA, optionB, optionC, optionD], currentAnswer: optionsControl.selectedSegmentIndex)
+        let correctAnswerIndex = optionsControl.selectedSegmentIndex
+        return Question(question: questionText, options: [optionA, optionB, optionC, optionD], correctAnswer: correctAnswerIndex)
     }
 }
 
@@ -99,7 +104,12 @@ private extension AddQuestionCell {
             allstrackView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
             allstrackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
             allstrackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            allstrackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)
+            allstrackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            
+            bottomSpacer.topAnchor.constraint(equalTo: allstrackView.bottomAnchor, constant: 20),
+            bottomSpacer.leadingAnchor.constraint(equalTo: leadingAnchor),
+            bottomSpacer.centerXAnchor.constraint(equalTo: centerXAnchor),
+            bottomSpacer.heightAnchor.constraint(equalToConstant: 20)
         ])
     }
 }

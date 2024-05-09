@@ -63,4 +63,14 @@ class AlertManager {
         alertController.addAction(okAction)
         controller.present(alertController, animated: true)
     }
+    
+    func showAddedQuestionAlert(from controller: UIViewController, count: Int?, message: String, exitCompletion: @escaping () -> Void) {
+        guard let count else { return }
+        let alertController = UIAlertController(title: "Вопросов добавлено: \(count)", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .cancel) { _ in
+            exitCompletion()
+        }
+        alertController.addAction(okAction)
+        controller.present(alertController, animated: true)
+    }
 }

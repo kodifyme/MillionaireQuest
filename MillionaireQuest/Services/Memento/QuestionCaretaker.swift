@@ -8,9 +8,8 @@
 import UIKit
 
 class QuestionCaretaker {
-    private let key = "savedQuestions"
     
-    func save(questions: [Question]) {
+    func saveQuestions(_ questions: [Question], key: String) {
         do {
             let data = try JSONEncoder().encode(questions)
             UserDefaults.standard.set(data, forKey: key)
@@ -19,7 +18,7 @@ class QuestionCaretaker {
         }
     }
     
-    func load() -> [Question] {
+    func loadQuestions(for key: String) -> [Question] {
         guard let data = UserDefaults.standard.data(forKey: key) else { return [] }
         return (try? JSONDecoder().decode([Question].self, from: data)) ?? []
     }

@@ -13,7 +13,7 @@ struct Question: Codable {
     let correctAnswer: Int
 }
 
-var questions: [Question] = [
+var defaultQuestions: [Question] = [
     Question(question: "Какой праздник отмечается в мире 1 сентября?", 
              options: ["День Святого Валентина", "Всемирный День мира", "Новый Год", "День борьбы со СПИДом"],
              correctAnswer: 1),

@@ -26,6 +26,7 @@
 		12830E4F2BBC68BE00DED6EB /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12830E4E2BBC68BE00DED6EB /* Game.swift */; };
 		12830E512BBC7B7A00DED6EB /* ResultsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12830E502BBC7B7A00DED6EB /* ResultsTableView.swift */; };
 		12830E532BBC834D00DED6EB /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12830E522BBC834D00DED6EB /* BackgroundView.swift */; };
+		1285D5312BED0EF8000184AD /* QuestionKeeper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1285D5302BED0EF8000184AD /* QuestionKeeper.swift */; };
 		1287D14D2BE8B12C00439924 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1287D14C2BE8B12B00439924 /* CustomTextField.swift */; };
 		128CEB022BB6B4C7003AAD78 /* UIStackView + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128CEB012BB6B4C7003AAD78 /* UIStackView + Extensions.swift */; };
 		128CEB0A2BB6B6DA003AAD78 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128CEB092BB6B6DA003AAD78 /* GameViewController.swift */; };
@@ -67,6 +68,7 @@
 		12830E4E2BBC68BE00DED6EB /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		12830E502BBC7B7A00DED6EB /* ResultsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsTableView.swift; sourceTree = "<group>"; };
 		12830E522BBC834D00DED6EB /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
+		1285D5302BED0EF8000184AD /* QuestionKeeper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionKeeper.swift; sourceTree = "<group>"; };
 		1287D14C2BE8B12B00439924 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		128CEB012BB6B4C7003AAD78 /* UIStackView + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView + Extensions.swift"; sourceTree = "<group>"; };
 		128CEB092BB6B6DA003AAD78 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				12B58D3B2BD16DEC0057D5CB /* GameCaretaker.swift */,
 				123ED9CF2BD2999A00C1E539 /* RecordsKeeper.swift */,
 				125881F12BEAA5A500A5A7CA /* QuestionCaretaker.swift */,
+				1285D5302BED0EF8000184AD /* QuestionKeeper.swift */,
 			);
 			path = Memento;
 			sourceTree = "<group>";
@@ -531,6 +534,7 @@
 				1214F1E12BA22B3A00F86303 /* SceneDelegate.swift in Sources */,
 				12DEE74B2BE3A660001C8C9C /* AddQuestionViewController.swift in Sources */,
 				120C5A272BBEE5FB002B001C /* GameSession.swift in Sources */,
+				1285D5312BED0EF8000184AD /* QuestionKeeper.swift in Sources */,
 				123ED9D02BD2999A00C1E539 /* RecordsKeeper.swift in Sources */,
 				12B58D3C2BD16DEC0057D5CB /* GameCaretaker.swift in Sources */,
 			);

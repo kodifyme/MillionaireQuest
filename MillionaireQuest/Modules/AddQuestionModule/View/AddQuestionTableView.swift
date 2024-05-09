@@ -7,18 +7,21 @@
 
 import UIKit
 
-protocol AddQuestionTableViewDelegate: AnyObject {
-    func receiveNewQuestion(question: String, options: [String], correctAnswerIndex: Int)
-}
+//protocol AddQuestionTableViewDelegate: AnyObject {
+//    func didUpdateQuestionData(question: String, options: [String], correctAnswerIndex: Int)
+//}
 
 class AddQuestionTableView: UITableView {
     
-    weak var customDelegate: AddQuestionTableViewDelegate?
+//    weak var customDelegate: AddQuestionTableViewDelegate?
+    
+    private var cells: [AddQuestionCell] = []
     
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: .zero, style: .insetGrouped)
         
         setupTableView()
+        addNewCell()
     }
     
     required init?(coder: NSCoder) {
@@ -32,24 +35,41 @@ class AddQuestionTableView: UITableView {
         dataSource = self
         delegate = self
     }
+    
+    func addNewCell() {
+        let newCell = AddQuestionCell()
+        cells.append(newCell)
+        reloadData()
+    }
+    
+    func collectQuestion() -> [Question] {
+        var newQuestions = [Question]()
+        
+        for cell in cells {
+            if let question = cell.configure() {
+                newQuestions.append(question)
+            }
+        }
+        return newQuestions
+    }
 }
 
 //MARK: - UITableViewDataSource
 extension AddQuestionTableView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+        cells.count
     }
     
     //MARK: - Cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = dequeueReusableCell(withIdentifier: AddQuestionCell.cellIdentifier, for: indexPath) as? AddQuestionCell else { return UITableViewCell() }
-        cell.delegate = self.inputViewController as? AddQuestionCellDelegate
+        let cell = cells[indexPath.row]
         return cell
     }
     
     //MARK: - Footer
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footerView = TableFooterView()
+        footerView.delegate = self
         return footerView
     }
     
@@ -58,14 +78,27 @@ extension AddQuestionTableView: UITableViewDataSource {
     }
 }
 
+//MARK: - UITableViewDelegate
 extension AddQuestionTableView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         350
     }
 }
 
-extension AddQuestionTableView: AddQuestionCellDelegate {
-    func getQuestionData(question: String, options: [String], currentAnswer: Int) {
-        customDelegate?.receiveNewQuestion(question: question, options: options, correctAnswerIndex: currentAnswer)
+//MARK: - AddQuestionViewControllerDataSource
+extension AddQuestionTableView: AddQuestionViewControllerDataSource {
+    func getCountOfQuestions() -> Int {
+        cells.count
+    }
+    
+    func collectQuestions() -> [Question] {
+        collectQuestion()
+    }
+}
+
+//MARK: - TableFooterViewDelegate
+extension AddQuestionTableView: TableFooterViewDelegate {
+    func didTapAddForm() {
+        addNewCell()
     }
 }

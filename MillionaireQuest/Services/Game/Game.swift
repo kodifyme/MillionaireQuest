@@ -19,10 +19,12 @@ class Game {
     let recordsKeeper = RecordsKeeper()
     private(set) var records = [RecordsOriginator]()
     
+    let questionsKeeper = QuestionKeeper()
     var questionsMode: QuestionsMode = .sequential
     
     private init() {
         records = recordsKeeper.load()
+        defaultQuestions = questionsKeeper.load()
     }
     
     func startNewSession(_ session: GameSession) {

@@ -7,16 +7,24 @@
 
 import UIKit
 
+protocol AddQuestionViewControllerDataSource: AnyObject {
+    func getCountOfQuestions() -> Int
+    func collectQuestions() -> [Question]
+}
+
 class AddQuestionViewController: UIViewController {
     
     let builder = QuestionBuilder()
     private let addQuestionTableView = AddQuestionTableView()
+    let questionKeeper = QuestionKeeper()
+    weak var dataSource: AddQuestionViewControllerDataSource?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupNavigationBar()
         setupView()
+        setDelegates()
         setupConstraints()
     }
     
@@ -29,36 +37,24 @@ class AddQuestionViewController: UIViewController {
     
     private func setupView() {
         view.addSubview(addQuestionTableView)
-        addQuestionTableView.customDelegate = self
     }
     
-    private func saveQuestion(_ question: Question) {
-        questions.append(question)
-        
-        let caretaker = QuestionCaretaker()
-        caretaker.save(questions: questions)
+    private func setDelegates() {
+        dataSource = addQuestionTableView
+    }
+    
+    private func saveQuestions(_ questions: [Question]) {
+        defaultQuestions.append(contentsOf: questions)
+        questionKeeper.save(questions: defaultQuestions)
     }
     
     @objc private func addQuestionButtonTapped() {
-        if let newQuestion = builder.build() {
-            print(newQuestion)
-                saveQuestion(newQuestion)
-        } else {
-            print("Error")
+        AlertManager.shared.showAddedQuestionAlert(from: self, count: dataSource?.getCountOfQuestions(), message: "") {
+            self.navigationController?.popToRootViewController(animated: true)
         }
-    }
-}
-
-//MARK: - AddQuestionTableViewDelegate
-extension AddQuestionViewController: AddQuestionTableViewDelegate {
-    func receiveNewQuestion(question: String, options: [String], correctAnswerIndex: Int) {
-        builder.setQuestionText(question)
-            .addOptions(options[0])
-            .addOptions(options[1])
-            .addOptions(options[2])
-            .addOptions(options[3])
-            .setCorrectAnswer(correctAnswerIndex)
-            
+        if let newQuestion = dataSource?.collectQuestions() {
+            saveQuestions(newQuestion)
+        }
     }
 }
 

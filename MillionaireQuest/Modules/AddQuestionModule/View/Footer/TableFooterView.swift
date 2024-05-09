@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol TableFooterViewDelegate: AnyObject {
+    func didTapAddForm()
+}
+
 class TableFooterView: UIView {
+    
+    weak var delegate: TableFooterViewDelegate?
     
     private lazy var addInputFormButton: UIButton = {
         let button = UIButton(type: .system)
@@ -33,7 +39,7 @@ class TableFooterView: UIView {
     }
     
     @objc private func addFormButtonTapped() {
-        print(#function)
+        delegate?.didTapAddForm()
     }
 }
 
@@ -44,7 +50,7 @@ extension TableFooterView {
             addInputFormButton.centerXAnchor.constraint(equalTo: centerXAnchor),
             addInputFormButton.centerYAnchor.constraint(equalTo: centerYAnchor),
             addInputFormButton.widthAnchor.constraint(equalToConstant: 50),
-            addInputFormButton.heightAnchor.constraint(equalToConstant: 40),
+            addInputFormButton.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
 }

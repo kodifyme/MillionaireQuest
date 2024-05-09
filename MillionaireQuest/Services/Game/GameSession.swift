@@ -17,7 +17,7 @@ protocol HintProvider {
 class GameSession {
     
     private lazy var sessionQuestions: [Question] = {
-        strategy.getQuestions(questions)
+        strategy.getQuestions(defaultQuestions)
     }()
     private lazy var totalQuestions = sessionQuestions.count
     private var score = 0

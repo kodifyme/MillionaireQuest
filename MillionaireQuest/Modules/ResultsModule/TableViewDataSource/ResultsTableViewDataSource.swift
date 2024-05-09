@@ -24,7 +24,7 @@ class ResultsTableViewDataSource: NSObject, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
         
-        cell.textLabel?.text = "Результат: \(results[indexPath.row].scoredPercentage)%"
+        cell.textLabel?.text = "Результат: \(results[indexPath.row].scoredPercentage.rounded())%"
         cell.selectionStyle = .none
         return cell
     }
