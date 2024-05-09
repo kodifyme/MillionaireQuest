@@ -7,13 +7,7 @@
 
 import UIKit
 
-//protocol AddQuestionTableViewDelegate: AnyObject {
-//    func didUpdateQuestionData(question: String, options: [String], correctAnswerIndex: Int)
-//}
-
 class AddQuestionTableView: UITableView {
-    
-//    weak var customDelegate: AddQuestionTableViewDelegate?
     
     private var cells: [AddQuestionCell] = []
     
@@ -63,6 +57,7 @@ extension AddQuestionTableView: UITableViewDataSource {
     //MARK: - Cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = cells[indexPath.row]
+        cell.selectionStyle = .none
         return cell
     }
     

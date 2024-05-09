@@ -15,8 +15,14 @@ protocol AddQuestionViewControllerDataSource: AnyObject {
 class AddQuestionViewController: UIViewController {
     
     let builder = QuestionBuilder()
-    private let addQuestionTableView = AddQuestionTableView()
     let questionKeeper = QuestionKeeper()
+    
+    private lazy var addQuestionTableView: AddQuestionTableView = {
+        var view = AddQuestionTableView()
+        dataSource = view
+        return view
+    }()
+    
     weak var dataSource: AddQuestionViewControllerDataSource?
     
     override func viewDidLoad() {
@@ -24,7 +30,6 @@ class AddQuestionViewController: UIViewController {
         
         setupNavigationBar()
         setupView()
-        setDelegates()
         setupConstraints()
     }
     
@@ -37,10 +42,6 @@ class AddQuestionViewController: UIViewController {
     
     private func setupView() {
         view.addSubview(addQuestionTableView)
-    }
-    
-    private func setDelegates() {
-        dataSource = addQuestionTableView
     }
     
     private func saveQuestions(_ questions: [Question]) {
