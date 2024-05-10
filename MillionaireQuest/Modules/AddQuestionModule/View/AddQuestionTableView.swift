@@ -32,11 +32,12 @@ class AddQuestionTableView: UITableView {
     
     func addNewCell() {
         let newCell = AddQuestionCell()
+        newCell.builder = QuestionBuilder()
         cells.append(newCell)
         reloadData()
     }
     
-    func collectQuestion() -> [Question] {
+    func collectQuestion() -> [Question]? {
         var newQuestions = [Question]()
         
         for cell in cells {
@@ -86,7 +87,7 @@ extension AddQuestionTableView: AddQuestionViewControllerDataSource {
         cells.count
     }
     
-    func collectQuestions() -> [Question] {
+    func collectQuestions() -> [Question]? {
         collectQuestion()
     }
 }

@@ -17,7 +17,6 @@
 		1214F1EB2BA22B3C00F86303 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1214F1E92BA22B3C00F86303 /* LaunchScreen.storyboard */; };
 		1214F1F62BA22E2600F86303 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1214F1F52BA22E2600F86303 /* MenuViewController.swift */; };
 		1217F23D2BA46E7F00F2EC61 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1217F23C2BA46E7F00F2EC61 /* Question.swift */; };
-		1217F2402BA4718300F2EC61 /* ModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1217F23F2BA4718300F2EC61 /* ModuleBuilder.swift */; };
 		1217F2452BA475D000F2EC61 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1217F2442BA475D000F2EC61 /* MenuView.swift */; };
 		123ED9D02BD2999A00C1E539 /* RecordsKeeper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123ED9CF2BD2999A00C1E539 /* RecordsKeeper.swift */; };
 		124CA6B52BE9128E003125B8 /* TableFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124CA6B42BE9128E003125B8 /* TableFooterView.swift */; };
@@ -59,7 +58,6 @@
 		1214F1EC2BA22B3C00F86303 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1214F1F52BA22E2600F86303 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		1217F23C2BA46E7F00F2EC61 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
-		1217F23F2BA4718300F2EC61 /* ModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleBuilder.swift; sourceTree = "<group>"; };
 		1217F2442BA475D000F2EC61 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		123ED9CF2BD2999A00C1E539 /* RecordsKeeper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsKeeper.swift; sourceTree = "<group>"; };
 		124CA6B42BE9128E003125B8 /* TableFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableFooterView.swift; sourceTree = "<group>"; };
@@ -417,7 +415,6 @@
 		12FCD0DF2BC9200600324D79 /* Builder */ = {
 			isa = PBXGroup;
 			children = (
-				1217F23F2BA4718300F2EC61 /* ModuleBuilder.swift */,
 				125881EF2BEAA33900A5A7CA /* QuestionBuilder.swift */,
 			);
 			path = Builder;
@@ -530,7 +527,6 @@
 				12B3D5ED2BD81E6C00E1771D /* SettingsViewController.swift in Sources */,
 				12830E512BBC7B7A00DED6EB /* ResultsTableView.swift in Sources */,
 				1214F1F62BA22E2600F86303 /* MenuViewController.swift in Sources */,
-				1217F2402BA4718300F2EC61 /* ModuleBuilder.swift in Sources */,
 				1214F1E12BA22B3A00F86303 /* SceneDelegate.swift in Sources */,
 				12DEE74B2BE3A660001C8C9C /* AddQuestionViewController.swift in Sources */,
 				120C5A272BBEE5FB002B001C /* GameSession.swift in Sources */,

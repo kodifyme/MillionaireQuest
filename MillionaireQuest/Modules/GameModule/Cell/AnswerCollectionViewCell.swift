@@ -15,7 +15,7 @@ class AnswerCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.adjustsFontSizeToFitWidth = true
         label.textAlignment = .center
-        label.numberOfLines = 2
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -52,8 +52,8 @@ class AnswerCollectionViewCell: UICollectionViewCell {
 private extension AnswerCollectionViewCell {
     func setupCellConstraints() {
         NSLayoutConstraint.activate([
-            answerLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            answerLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            answerLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
+            answerLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             answerLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }

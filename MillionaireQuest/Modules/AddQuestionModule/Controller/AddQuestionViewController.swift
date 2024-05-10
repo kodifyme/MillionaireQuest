@@ -9,14 +9,12 @@ import UIKit
 
 protocol AddQuestionViewControllerDataSource: AnyObject {
     func getCountOfQuestions() -> Int
-    func collectQuestions() -> [Question]
+    func collectQuestions() -> [Question]?
 }
 
 class AddQuestionViewController: UIViewController {
     
-    let builder = QuestionBuilder()
     let questionKeeper = QuestionKeeper()
-    
     private lazy var addQuestionTableView: AddQuestionTableView = {
         var view = AddQuestionTableView()
         dataSource = view
@@ -50,11 +48,10 @@ class AddQuestionViewController: UIViewController {
     }
     
     @objc private func addQuestionButtonTapped() {
+        guard let newQuestions = dataSource?.collectQuestions() else { return }
+        saveQuestions(newQuestions)
         AlertManager.shared.showAddedQuestionAlert(from: self, count: dataSource?.getCountOfQuestions(), message: "") {
             self.navigationController?.popToRootViewController(animated: true)
-        }
-        if let newQuestion = dataSource?.collectQuestions() {
-            saveQuestions(newQuestion)
         }
     }
 }

@@ -10,6 +10,7 @@ import UIKit
 class AddQuestionCell: UITableViewCell {
     
     static let cellIdentifier = "AddQuestionCell"
+    var builder = QuestionBuilder()
     
     private lazy var questionTextView: UITextView = {
         let textView = UITextView()
@@ -67,8 +68,15 @@ class AddQuestionCell: UITableViewCell {
             print("Не все поля заполнены")
             return nil
         }
-        let correctAnswerIndex = optionsControl.selectedSegmentIndex
-        return Question(question: questionText, options: [optionA, optionB, optionC, optionD], correctAnswer: correctAnswerIndex)
+        
+        builder.setQuestionText(questionText)
+            .addOptions(optionA)
+            .addOptions(optionB)
+            .addOptions(optionC)
+            .addOptions(optionD)
+            .setCorrectAnswer(optionsControl.selectedSegmentIndex)
+        
+        return builder.build()
     }
 }
 
