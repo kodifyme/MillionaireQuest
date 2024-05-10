@@ -93,6 +93,23 @@ class GameView: UIView {
         questionCollectionView.delegate = self
     }
     
+    func hideCells() {
+        var incorrectAnswerIndexes = currentQuestion.options.indices.filter { $0 != currentQuestion.correctAnswer }
+        incorrectAnswerIndexes.remove(at: 1)
+        
+        for i in incorrectAnswerIndexes {
+            guard let cell = questionCollectionView.cellForItem(at: IndexPath(item: i, section: 0)) as? AnswerCollectionViewCell else { return }
+            cell.isHidden = true
+        }
+    }
+    
+    func showAllCells() {
+        for i in 0..<currentQuestion.options.count {
+            guard let cell = questionCollectionView.cellForItem(at: IndexPath(item: i, section: 0)) as? AnswerCollectionViewCell else { return }
+            cell.isHidden = false
+        }
+    }
+    
     @objc private func handleFriendCallButton() {
         delegate?.didUseFriendCall()
         friendCallButton.isEnabled = false
@@ -109,6 +126,7 @@ class GameView: UIView {
         delegate?.didUseFiftyFifty()
         fiftyFiftyButton.isEnabled = false
         fiftyFiftyButton.backgroundColor = .systemGray2
+        hideCells()
     }
 }
 
@@ -158,7 +176,7 @@ extension GameView: UICollectionViewDelegateFlowLayout {
 
 //MARK: - GameViewControllerDelegate
 extension GameView: GameViewControllerDelegate {
-
+    
     func colorAfter(isCorrect: Bool) {
         guard let lastCellIndex else { return }
         let cell = questionCollectionView.cellForItem(at: lastCellIndex)
@@ -167,6 +185,7 @@ extension GameView: GameViewControllerDelegate {
     
     func refreshWithQuestion(question: Question) {
         currentQuestion = question
+        showAllCells()
         questionCollectionView.reloadData()
     }
     

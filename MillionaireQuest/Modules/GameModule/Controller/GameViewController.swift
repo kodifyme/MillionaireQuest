@@ -7,9 +7,6 @@
 
 import UIKit
 
-// optional: generics Caretaker and Keeper
-// optional: hide cells when using hint
-
 protocol GameViewControllerDelegate: AnyObject {
     func colorAfter(isCorrect: Bool)
     func refreshWithQuestion(question: Question)
