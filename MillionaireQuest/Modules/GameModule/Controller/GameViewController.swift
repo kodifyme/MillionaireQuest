@@ -7,12 +7,9 @@
 
 import UIKit
 
-// 1. move some states(calculations) to Session – check?
-// 4. GameSession(mode: game.questionsMode) duplicating issue — fix – optional
-
-// 2. Setttings: select choosed mode, UserDefaults – optional
-// 3. Do not access HintUsageFacade directly – make Protocol for access to GameSession
-// w5: custom cell with 5 fields and control
+// optional: generics Caretaker and Keeper
+// optional: hide cells when using hint
+// naming: "Add" word
 
 protocol GameViewControllerDelegate: AnyObject {
     func colorAfter(isCorrect: Bool)

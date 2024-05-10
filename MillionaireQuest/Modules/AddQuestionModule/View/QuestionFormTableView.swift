@@ -1,5 +1,5 @@
 //
-//  AddQuestionTableView.swift
+//  QuestionFormTableView.swift
 //  MillionaireQuest
 //
 //  Created by KOДИ on 02.05.2024.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-class AddQuestionTableView: UITableView {
+class QuestionFormTableView: UITableView {
     
-    private var cells: [AddQuestionCell] = []
+    private var questionsCount = 0
     
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: .zero, style: .insetGrouped)
@@ -25,23 +25,22 @@ class AddQuestionTableView: UITableView {
     private func setupTableView() {
         translatesAutoresizingMaskIntoConstraints = false
         backgroundView = BackgroundView()
-        register(AddQuestionCell.self, forCellReuseIdentifier: AddQuestionCell.cellIdentifier)
+        register(QuestionFormCell.self, forCellReuseIdentifier: QuestionFormCell.cellIdentifier)
         dataSource = self
         delegate = self
     }
     
     func addNewCell() {
-        let newCell = AddQuestionCell()
-        newCell.builder = QuestionBuilder()
-        cells.append(newCell)
+        questionsCount += 1
         reloadData()
     }
     
     func collectQuestion() -> [Question]? {
         var newQuestions = [Question]()
         
-        for cell in cells {
-            if let question = cell.configure() {
+        for i in 0..<questionsCount {
+            guard let cell = cellForRow(at: IndexPath(row: i, section: 0)) as? QuestionFormCell else { continue }
+            if let question = cell.generateQuestion() {
                 newQuestions.append(question)
             }
         }
@@ -50,14 +49,14 @@ class AddQuestionTableView: UITableView {
 }
 
 //MARK: - UITableViewDataSource
-extension AddQuestionTableView: UITableViewDataSource {
+extension QuestionFormTableView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        cells.count
+        questionsCount
     }
     
     //MARK: - Cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = cells[indexPath.row]
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: QuestionFormCell.cellIdentifier, for: indexPath) as? QuestionFormCell else { return UITableViewCell() }
         cell.selectionStyle = .none
         return cell
     }
@@ -75,16 +74,16 @@ extension AddQuestionTableView: UITableViewDataSource {
 }
 
 //MARK: - UITableViewDelegate
-extension AddQuestionTableView: UITableViewDelegate {
+extension QuestionFormTableView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         350
     }
 }
 
-//MARK: - AddQuestionViewControllerDataSource
-extension AddQuestionTableView: AddQuestionViewControllerDataSource {
+//MARK: - QuestionFormViewControllerDataSource
+extension QuestionFormTableView: QuestionFormViewControllerDataSource {
     func getCountOfQuestions() -> Int {
-        cells.count
+        questionsCount
     }
     
     func collectQuestions() -> [Question]? {
@@ -93,7 +92,7 @@ extension AddQuestionTableView: AddQuestionViewControllerDataSource {
 }
 
 //MARK: - TableFooterViewDelegate
-extension AddQuestionTableView: TableFooterViewDelegate {
+extension QuestionFormTableView: TableFooterViewDelegate {
     func didTapAddForm() {
         addNewCell()
     }

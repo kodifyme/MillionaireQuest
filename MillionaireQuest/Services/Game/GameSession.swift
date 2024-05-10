@@ -28,7 +28,7 @@ class GameSession {
     
     private var strategy: QuestionStrategy
     
-    var hintUsageFacade = HintUsageFacade()
+    var hintService = HintService()
     
     var currentQuestionNumber: Observable<Int>
     var correctAnswerPercentage: Observable<Double>
@@ -77,21 +77,21 @@ class GameSession {
     }
     
     func updateHints() {
-        hintUsageFacade.currentQuestion = currentQuestion
+        hintService.currentQuestion = currentQuestion
     }
 }
 
 //MARK: - HintProvider
 extension GameSession: HintProvider {
     func callFriend() -> String {
-        hintUsageFacade.callFriend()
+        hintService.callFriend()
     }
     
     func useAuditoryHelp() -> [Int] {
-        hintUsageFacade.useAuditoryHelp()
+        hintService.useAuditoryHelp()
     }
     
     func use50to50Hint() -> [String] {
-        hintUsageFacade.use50to50Hint()
+        hintService.use50to50Hint()
     }
 }

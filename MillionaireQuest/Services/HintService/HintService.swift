@@ -1,5 +1,5 @@
 //
-//  HintUsageFacade.swift
+//  HintService.swift
 //  MillionaireQuest
 //
 //  Created by KOДИ on 02.05.2024.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HintUsageFacade {
+class HintService {
     
     var currentQuestion: Question?
     

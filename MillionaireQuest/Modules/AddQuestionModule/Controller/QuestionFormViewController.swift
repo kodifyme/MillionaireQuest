@@ -1,5 +1,5 @@
 //
-//  AddQuestionViewController.swift
+//  QuestionFormTableView.swift
 //  MillionaireQuest
 //
 //  Created by KOДИ on 02.05.2024.
@@ -7,21 +7,22 @@
 
 import UIKit
 
-protocol AddQuestionViewControllerDataSource: AnyObject {
+protocol QuestionFormViewControllerDataSource: AnyObject {
     func getCountOfQuestions() -> Int
     func collectQuestions() -> [Question]?
 }
 
-class AddQuestionViewController: UIViewController {
+class QuestionFormViewController: UIViewController {
     
     let questionKeeper = QuestionKeeper()
-    private lazy var addQuestionTableView: AddQuestionTableView = {
-        var view = AddQuestionTableView()
+    
+    private lazy var addQuestionTableView: QuestionFormTableView = {
+        var view = QuestionFormTableView()
         dataSource = view
         return view
     }()
     
-    weak var dataSource: AddQuestionViewControllerDataSource?
+    weak var dataSource: QuestionFormViewControllerDataSource?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,7 +58,7 @@ class AddQuestionViewController: UIViewController {
 }
 
 //MARK: - Setup Constraints
-private extension AddQuestionViewController {
+private extension QuestionFormViewController {
     func setupConstraints() {
         NSLayoutConstraint.activate([
             addQuestionTableView.topAnchor.constraint(equalTo: view.topAnchor),

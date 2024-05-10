@@ -1,5 +1,5 @@
 //
-//  AddQuestionCell.swift
+//  QuestionFormCell.swift
 //  MillionaireQuest
 //
 //  Created by KOДИ on 02.05.2024.
@@ -7,10 +7,9 @@
 
 import UIKit
 
-class AddQuestionCell: UITableViewCell {
+class QuestionFormCell: UITableViewCell {
     
     static let cellIdentifier = "AddQuestionCell"
-    var builder = QuestionBuilder()
     
     private lazy var questionTextView: UITextView = {
         let textView = UITextView()
@@ -59,7 +58,7 @@ class AddQuestionCell: UITableViewCell {
         contentView.addSubview(allstrackView)
     }
     
-    func configure() -> Question? {
+    func generateQuestion() -> Question? {
         guard let questionText = questionTextView.text, !questionText.isEmpty,
               let optionA = optionATextField.text, !optionA.isEmpty,
               let optionB = optionBTextField.text, !optionB.isEmpty,
@@ -69,19 +68,18 @@ class AddQuestionCell: UITableViewCell {
             return nil
         }
         
-        builder.setQuestionText(questionText)
+        return QuestionBuilder().setQuestionText(questionText)
             .addOptions(optionA)
             .addOptions(optionB)
             .addOptions(optionC)
             .addOptions(optionD)
             .setCorrectAnswer(optionsControl.selectedSegmentIndex)
-        
-        return builder.build()
+            .build()
     }
 }
 
 //MARK: - UITextViewDelegate
-extension AddQuestionCell: UITextViewDelegate {
+extension QuestionFormCell: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor == UIColor.lightGray {
             textView.text = nil
@@ -91,7 +89,7 @@ extension AddQuestionCell: UITextViewDelegate {
 }
 
 //MARK: - Setup Constraints
-private extension AddQuestionCell {
+private extension QuestionFormCell {
     func setupCellConstraints() {
         NSLayoutConstraint.activate([
             allstrackView.topAnchor.constraint(equalTo: topAnchor, constant: 10),

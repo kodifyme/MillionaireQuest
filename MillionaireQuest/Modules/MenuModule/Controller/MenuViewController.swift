@@ -45,7 +45,7 @@ extension MenuViewController: MenuViewDelegate {
     }
     
     func handleAddQuestionButton() {
-        navigationController?.pushViewController(AddQuestionViewController(), animated: true)
+        navigationController?.pushViewController(QuestionFormViewController(), animated: true)
     }
 }
 
