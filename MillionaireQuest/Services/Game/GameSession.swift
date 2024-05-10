@@ -11,7 +11,6 @@ protocol HintProvider {
     func callFriend() -> String
     func useAuditoryHelp() -> [Int]
     func use50to50Hint() -> [String]
-    func resetHints()
 }
 
 class GameSession {
@@ -82,6 +81,7 @@ class GameSession {
     }
 }
 
+//MARK: - HintProvider
 extension GameSession: HintProvider {
     func callFriend() -> String {
         hintUsageFacade.callFriend()
@@ -93,9 +93,5 @@ extension GameSession: HintProvider {
     
     func use50to50Hint() -> [String] {
         hintUsageFacade.use50to50Hint()
-    }
-    
-    func resetHints() {
-        hintUsageFacade.resetHints()
     }
 }

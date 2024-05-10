@@ -19,6 +19,7 @@ protocol GameViewControllerDelegate: AnyObject {
     func refreshWithQuestion(question: Question)
     func setQuestionNumber(_ value: Int)
     func setCorrectPercentage(_ value: Double)
+    func resetHints()
 }
 
 class GameViewController: UIViewController {
@@ -63,6 +64,7 @@ class GameViewController: UIViewController {
         gameSession = GameSession(mode: game.questionsMode)
         game.startNewSession(gameSession)
         setupObservers()
+        delegate?.resetHints()
     }
 }
 

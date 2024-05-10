@@ -158,6 +158,7 @@ extension GameView: UICollectionViewDelegateFlowLayout {
 
 //MARK: - GameViewControllerDelegate
 extension GameView: GameViewControllerDelegate {
+
     func colorAfter(isCorrect: Bool) {
         guard let lastCellIndex else { return }
         let cell = questionCollectionView.cellForItem(at: lastCellIndex)
@@ -175,6 +176,15 @@ extension GameView: GameViewControllerDelegate {
     
     func setCorrectPercentage(_ value: Double) {
         correctPercentageLabel.text = "Процент правильных ответов: \(value.rounded()) %"
+    }
+    
+    func resetHints() {
+        friendCallButton.isEnabled = true
+        friendCallButton.backgroundColor = .systemBlue
+        audienceHelpButton.isEnabled = true
+        audienceHelpButton.backgroundColor = .systemBlue
+        fiftyFiftyButton.isEnabled = true
+        fiftyFiftyButton.backgroundColor = .systemBlue
     }
 }
 
