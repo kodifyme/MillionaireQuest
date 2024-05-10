@@ -14,7 +14,7 @@ protocol QuestionFormViewControllerDataSource: AnyObject {
 
 class QuestionFormViewController: UIViewController {
     
-    let questionKeeper = QuestionKeeper()
+    let questionKeeper = Keeper<Question>()
     
     private lazy var addQuestionTableView: QuestionFormTableView = {
         var view = QuestionFormTableView()
@@ -45,7 +45,7 @@ class QuestionFormViewController: UIViewController {
     
     private func saveQuestions(_ questions: [Question]) {
         defaultQuestions.append(contentsOf: questions)
-        questionKeeper.save(questions: defaultQuestions)
+        questionKeeper.save(defaultQuestions)
     }
     
     @objc private func addQuestionButtonTapped() {

@@ -1,25 +1,25 @@
 //
-//  QuestionCaretaker.swift
+//  Caretaker.swift
 //  MillionaireQuest
 //
-//  Created by KOДИ on 07.05.2024.
+//  Created by KOДИ on 10.05.2024.
 //
 
 import UIKit
 
-class QuestionCaretaker {
+class Caretaker<T: Codable> {
     
-    func saveQuestions(_ questions: [Question], key: String) {
+    func save(_ items: [T], key: String) {
         do {
-            let data = try JSONEncoder().encode(questions)
+            let data = try JSONEncoder().encode(items)
             UserDefaults.standard.set(data, forKey: key)
         } catch {
             print("Ошибка при сохранении результатов \(error.localizedDescription)")
         }
     }
     
-    func loadQuestions(for key: String) -> [Question] {
+    func loadMementos(for key: String) -> [T] {
         guard let data = UserDefaults.standard.data(forKey: key) else { return [] }
-        return (try? JSONDecoder().decode([Question].self, from: data)) ?? []
+        return (try? JSONDecoder().decode([T].self, from: data)) ?? []
     }
 }

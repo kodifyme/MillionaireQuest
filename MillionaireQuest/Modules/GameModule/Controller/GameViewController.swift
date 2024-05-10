@@ -9,7 +9,6 @@ import UIKit
 
 // optional: generics Caretaker and Keeper
 // optional: hide cells when using hint
-// naming: "Add" word
 
 protocol GameViewControllerDelegate: AnyObject {
     func colorAfter(isCorrect: Bool)

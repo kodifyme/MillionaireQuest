@@ -16,10 +16,10 @@ class Game {
     static let shared = Game()
     private(set) var gameSession: GameSession?
     
-    let recordsKeeper = RecordsKeeper()
+    let recordsKeeper = Keeper<RecordsOriginator>()
     private(set) var records = [RecordsOriginator]()
     
-    let questionsKeeper = QuestionKeeper()
+    let questionsKeeper = Keeper<Question>()
     var questionsMode: QuestionsMode = .sequential
     
     private init() {

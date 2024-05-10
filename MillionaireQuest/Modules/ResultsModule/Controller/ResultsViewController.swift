@@ -13,7 +13,7 @@ protocol ResultsViewControllerDelegate: AnyObject {
 
 class ResultsViewController: UIViewController {
     
-    let recordsKeeper = RecordsKeeper()
+    let recordsKeeper = Keeper<RecordsOriginator>()
     
     private lazy var resultsTableView: ResultsTableView = {
         var view = ResultsTableView()
