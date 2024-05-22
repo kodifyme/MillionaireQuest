@@ -103,13 +103,6 @@ class GameView: UIView {
         }
     }
     
-    func showAllCells() {
-        for i in 0..<currentQuestion.options.count {
-            guard let cell = questionCollectionView.cellForItem(at: IndexPath(item: i, section: 0)) as? AnswerCollectionViewCell else { return }
-            cell.isHidden = false
-        }
-    }
-    
     @objc private func handleFriendCallButton() {
         delegate?.didUseFriendCall()
         friendCallButton.isEnabled = false
@@ -151,6 +144,7 @@ extension GameView: UICollectionViewDataSource {
         
         let answer = currentQuestion.options[indexPath.row]
         cell.configure(with: answer)
+        cell.isHidden = false
         return cell
     }
 }
@@ -185,7 +179,6 @@ extension GameView: GameViewControllerDelegate {
     
     func refreshWithQuestion(question: Question) {
         currentQuestion = question
-        showAllCells()
         questionCollectionView.reloadData()
     }
     
