@@ -7,21 +7,13 @@
 
 import UIKit
 
-struct Question {
+struct Question: Codable {
     let question: String
     let options: [String]
     let correctAnswer: Int
-    var friendCall: String?
-    var votePercentage: [Int: Int]?
-    
-    init(question: String, options: [String], correctAnswer: Int) {
-        self.question = question
-        self.options = options
-        self.correctAnswer = correctAnswer
-    }
 }
 
-let questions: [Question] = [
+var defaultQuestions: [Question] = [
     Question(question: "Какой праздник отмечается в мире 1 сентября?", 
              options: ["День Святого Валентина", "Всемирный День мира", "Новый Год", "День борьбы со СПИДом"],
              correctAnswer: 1),
