@@ -49,6 +49,7 @@ class GameView: UIView {
         let colletctionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
         colletctionView.register(AnswerCollectionViewCell.self, forCellWithReuseIdentifier: AnswerCollectionViewCell.cellIdentifier)
         colletctionView.register(QuestionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: QuestionHeader.identifier)
+        colletctionView.backgroundColor = .clear
         colletctionView.translatesAutoresizingMaskIntoConstraints = false
         return colletctionView
     }()

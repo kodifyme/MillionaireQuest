@@ -25,13 +25,15 @@ class GameViewController: UIViewController {
     }()
     
     private lazy var gameView: GameView = {
-        GameView(question: gameSession.currentQuestion)
+        let view = GameView(question: gameSession.currentQuestion)
+        view.delegate = self
+        delegate = view
+        return view
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setDelegates()
         startNewSession()
         setAppearance()
         setupView()
@@ -46,11 +48,6 @@ class GameViewController: UIViewController {
     
     private func setupView() {
         view.addSubview(gameView)
-    }
-    
-    private func setDelegates() {
-        gameView.delegate = self
-        delegate = gameView
     }
     
     private func startNewSession() {

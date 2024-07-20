@@ -23,6 +23,9 @@ class Game {
     var questionsMode: QuestionsMode = .sequential
     
     private init() {
+        if questionsKeeper.load().isEmpty {
+            questionsKeeper.save(defaultQuestions)
+        }
         records = recordsKeeper.load()
         defaultQuestions = questionsKeeper.load()
     }

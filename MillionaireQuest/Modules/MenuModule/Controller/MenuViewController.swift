@@ -9,7 +9,11 @@ import UIKit
 
 class MenuViewController: UIViewController {
     
-    private let menuView = MenuView()
+    private lazy var menuView: MenuView = {
+        let view = MenuView()
+        view.delegate = self
+        return view
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +30,6 @@ class MenuViewController: UIViewController {
     }
     
     private func setupView() {
-        menuView.delegate = self
         view.addSubview(menuView)
     }
 }
